@@ -51,41 +51,39 @@ class _AppInputState extends State<AppInput> {
         decoration: InputDecoration(
           icon: widget.keyboardType == TextInputType.phone
               ? Container(
-            height: 60.h,
-            width: 69.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.r),
-              color: Colors.white,
-              border: Border.all(
-                color: const Color(
-                  0xffF3F3F3,
-                ),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/icons/saudi.png",
-                  width: 32.w,
-                  height: 20.h,
-                  fit: BoxFit.scaleDown,
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Text(
-                  "966+",
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
+                  height: 60.h,
+                  width: 69.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.r),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: const Color(
+                        0xffF3F3F3,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/icons/saudi.png",
+                        width: 32.w,
+                        height: 20.h,
+                        fit: BoxFit.scaleDown,
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Text(
+                        "966+",
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.r),
@@ -118,28 +116,28 @@ class _AppInputState extends State<AppInput> {
           ),
           prefixIcon: widget.prefixIcon != null
               ? Padding(
-            padding: EdgeInsetsDirectional.all(
-              12.r,
-            ),
-            child: SvgPicture.asset(
-              widget.prefixIcon!,
-              fit: BoxFit.scaleDown,
-              height: 20.h,
-              width: 32.w,
-            ),
-          )
+                  padding: EdgeInsetsDirectional.all(
+                    12.r,
+                  ),
+                  child: SvgPicture.asset(
+                    widget.prefixIcon!,
+                    fit: BoxFit.scaleDown,
+                    height: 20.h,
+                    width: 32.w,
+                  ),
+                )
               : null,
           suffixIcon: widget.isPassword
               ? IconButton(
-            icon: Icon(
-              isPasswordHidden ? Icons.visibility_off : Icons.visibility,
-            ),
-            onPressed: () {
-              setState(() {
-                isPasswordHidden = !isPasswordHidden;
-              });
-            },
-          )
+                  icon: Icon(
+                    isPasswordHidden ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isPasswordHidden = !isPasswordHidden;
+                    });
+                  },
+                )
               : widget.suffixIcon,
         ),
         obscureText: isPasswordHidden && widget.isPassword,
