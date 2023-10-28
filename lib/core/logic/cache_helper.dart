@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thimar_driver/features/authentication/login_model.dart';
 
 class CacheHelper {
   static late SharedPreferences _prefs;
@@ -35,21 +36,21 @@ class CacheHelper {
     return int.parse(_prefs.getString("cityId") ?? "0");
   }
 
-  // static Future saveLoginData(UserModel user) async {
-  //   await _prefs.setString("image", user.image);
-  //   await _prefs.setInt("id", user.id);
-  //   await _prefs.setString("phone", user.phone);
-  //   await _prefs.setString("email", user.email);
-  //   await _prefs.setString("fullname", user.fullname);
-  //   await _prefs.setString("token", user.token);
-  //   await _prefs.setString("cityId", user.city.id);
-  //   await _prefs.setString("cityName", user.city.name);
-  //   await _prefs.setBool("isActive", user.isActive);
-  //   await _prefs.setInt("userCartCount", user.userCartCount);
-  //   await _prefs.setInt("unreadNotifications", user.unreadNotifications);
-  // }
-  //
-  // static Future removeLoginData() async {
-  //   await _prefs.clear();
-  // }
+  static Future saveLoginData(DriverModel user) async {
+    await _prefs.setString("image", user.image);
+    await _prefs.setInt("id", user.id);
+    await _prefs.setString("phone", user.phone);
+    await _prefs.setString("email", user.email);
+    await _prefs.setString("fullname", user.fullname);
+    await _prefs.setString("token", user.token);
+    await _prefs.setString("cityId", user.city.id);
+    await _prefs.setString("cityName", user.city.name);
+    await _prefs.setBool("isActive", user.isActive);
+    await _prefs.setInt("userCartCount", user.userCartCount);
+    await _prefs.setInt("unreadNotifications", user.unreadNotifications);
+  }
+
+  static Future removeLoginData() async {
+    await _prefs.clear();
+  }
 }

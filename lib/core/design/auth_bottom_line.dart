@@ -5,9 +5,12 @@ class BottomLine extends StatelessWidget {
   const BottomLine({
     super.key,
     this.onPress,
+    this.text,
+    this.subText
   });
 
   final VoidCallback? onPress;
+  final String? text, subText;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class BottomLine extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "ليس لديك حساب ؟",
+          subText!,
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontSize: 15.sp,
@@ -25,7 +28,7 @@ class BottomLine extends StatelessWidget {
         TextButton(
           onPressed: onPress,
           child: Text(
-            "تسجيل الأن",
+            text!,
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 18.sp,

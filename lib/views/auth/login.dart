@@ -6,9 +6,12 @@ import 'package:kiwi/kiwi.dart';
 import 'package:thimar_driver/core/design/app_button.dart';
 import 'package:thimar_driver/core/design/app_input.dart';
 import 'package:thimar_driver/core/design/auth_header.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/bloc.dart';
 import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
+import 'package:thimar_driver/views/auth/forget_password.dart';
+import 'package:thimar_driver/views/auth/register.dart';
 
 import '../../core/design/auth_bottom_line.dart';
 
@@ -43,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
                   child: ListView(
                     padding: EdgeInsetsDirectional.symmetric(
                       horizontal: 16.w,
-                      vertical: 16.h,
+                      vertical: 20.h,
                     ),
                     children: [
                       const AuthHeader(
@@ -75,7 +78,11 @@ class _LoginViewState extends State<LoginView> {
                       Align(
                         alignment: AlignmentDirectional.centerEnd,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            navigateTo(
+                              const ForgetPasswordView(),
+                            );
+                          },
                           child: Text(
                             "هل نسيت كلمة المرور ؟",
                             style: TextStyle(
@@ -109,7 +116,13 @@ class _LoginViewState extends State<LoginView> {
                         height: 45.h,
                       ),
                       BottomLine(
-                        onPress: () {},
+                        onPress: () {
+                          navigateTo(
+                            const RegisterView(),
+                          );
+                        },
+                        subText: "ليس لديك حساب ؟",
+                        text: "تسجيل الآن",
                       ),
                     ],
                   ),

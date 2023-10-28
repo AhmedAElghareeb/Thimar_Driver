@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/dio_helper.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
+import 'package:thimar_driver/features/authentication/login_model.dart';
 import 'events.dart';
 import 'states.dart';
 
@@ -37,10 +40,15 @@ class AuthenticationBloc
     });
 
     if (response.success) {
+      await CacheHelper.saveLoginData(
+        DriverModel.fromJson(response.response!.data['data'],),
+      );
+      showSnackBar(
+        "تم تسجيل الدخول بنجاح",
+        typ: MessageType.success,
+      );
       emit(
-        DriverLoginSuccessState(
-          msg: response.msg,
-        ),
+        DriverLoginSuccessState(),
       );
     } else {
       emit(

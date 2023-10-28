@@ -6,6 +6,7 @@ import 'package:thimar_driver/core/logic/kiwi.dart';
 
 import 'core/logic/helper_methods.dart';
 import 'views/auth/login.dart';
+import 'views/auth/register.dart';
 import 'views/auth/splash.dart';
 
 void main() {
@@ -89,8 +90,9 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        home: LoginView(),
+        home: RegisterView(),
       ),
     );
   }
