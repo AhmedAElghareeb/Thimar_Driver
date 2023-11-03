@@ -1,7 +1,14 @@
+import 'dart:async';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:thimar_driver/views/auth/login.dart';
+import 'package:thimar_driver/views/main/home_nav_bar.dart';
+
+import '../../core/logic/cache_helper.dart';
+import '../../core/logic/helper_methods.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -11,6 +18,26 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+        const Duration(
+          seconds: 3,
+        ), () async {
+      if (CacheHelper.getToken().isNotEmpty) {
+        navigateTo(
+          const HomeNavBar(),
+        );
+      } else {
+        navigateTo(
+          const LoginView(),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
         ),
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        home: RegisterView(),
+        home: const SplashView(),
       ),
     );
   }

@@ -431,7 +431,6 @@ class _AppStepsState extends State<AppSteps> {
                           ),
                           const AppInput(
                             labelText: "رقم الإيبان",
-                            // prefixIcon: "assets/icons/car.svg",
                             keyboardType: TextInputType.number,
                           ),
                           SizedBox(
@@ -439,7 +438,6 @@ class _AppStepsState extends State<AppSteps> {
                           ),
                           const AppInput(
                             labelText: "إسم البنك",
-                            prefixIcon: "assets/icons/bank.svg",
                           ),
                           SizedBox(
                             height: 10.h,

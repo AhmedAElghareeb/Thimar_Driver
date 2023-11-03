@@ -6,6 +6,7 @@ import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/dio_helper.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/login_model.dart';
+import 'package:thimar_driver/views/main/home_nav_bar.dart';
 import 'events.dart';
 import 'states.dart';
 
@@ -44,8 +45,11 @@ class AuthenticationBloc
         DriverModel.fromJson(response.response!.data['data'],),
       );
       showSnackBar(
-        "تم تسجيل الدخول بنجاح",
+        response.msg,
         typ: MessageType.success,
+      );
+      navigateTo(
+        const HomeNavBar(),
       );
       emit(
         DriverLoginSuccessState(),
