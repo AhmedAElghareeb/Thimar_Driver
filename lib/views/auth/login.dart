@@ -25,6 +25,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final bloc = KiwiContainer().resolve<AuthenticationBloc>();
 
+  final _event = DriverLoginEvent();
+
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -57,20 +59,32 @@ class _LoginViewState extends State<LoginView> {
                         height: 28.h,
                       ),
                       AppInput(
-                        controller: bloc.phController,
+                        controller: _event.phController,
                         labelText: "رقم الجوال",
                         keyboardType: TextInputType.phone,
                         prefixIcon: "assets/icons/call.svg",
+                        validator: (value) {
+                          if(value!.isEmpty) {
+                            return "هذا الحقل مطلوب!!";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(
                         height: 16.h,
                       ),
                       AppInput(
-                        controller: bloc.passController,
+                        controller: _event.passController,
                         labelText: "كلمة المرور",
                         keyboardType: TextInputType.visiblePassword,
                         isPassword: true,
                         prefixIcon: "assets/icons/lock.svg",
+                        validator: (value) {
+                          if(value!.isEmpty) {
+                            return "هذا الحقل مطلوب!!";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(
                         height: 9.h,
@@ -104,9 +118,11 @@ class _LoginViewState extends State<LoginView> {
                           return AppButton(
                             isLoading: state is DriverLoginLoadingState,
                             onPress: () {
-                              bloc.add(
-                                DriverLoginEvent(),
-                              );
+                              if(bloc.formKey.currentState!.validate()) {
+                                bloc.add(
+                                  DriverLoginEvent(),
+                                );
+                              }
                             },
                             text: "تسجيل الدخول",
                           );

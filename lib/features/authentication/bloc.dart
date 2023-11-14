@@ -13,26 +13,22 @@ import 'states.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvents, AuthenticationStates> {
   AuthenticationBloc() : super(AuthenticationStates()) {
-    on<DriverLoginEvent>(driverLogin);
+    on<DriverLoginEvent>(login);
+    on<DriverForgetPasswordEvent>(forgetPassword);
+    on<DriverLogOutEvent>(logOut);
   }
 
   final formKey = GlobalKey<FormState>();
-  final phController = TextEditingController(
-    text: "966541236423",
-  );
-  final passController = TextEditingController(
-    text: "123456789",
-  );
 
-  Future<void> driverLogin(
+  Future<void> login(
       DriverLoginEvent event, Emitter<AuthenticationStates> emit) async {
     emit(
       DriverLoginLoadingState(),
     );
 
     final response = await DioHelper().sendToServer(url: "login", body: {
-      "phone": phController.text,
-      "password": passController.text,
+      "phone": event.phController.text,
+      "password": event.passController.text,
       "device_token": "test",
       "type": Platform.operatingSystem,
       "user_type": "driver",
@@ -42,7 +38,9 @@ class AuthenticationBloc
 
     if (response.success) {
       await CacheHelper.saveLoginData(
-        DriverModel.fromJson(response.response!.data['data'],),
+        DriverModel.fromJson(
+          response.response!.data['data'],
+        ),
       );
       showSnackBar(
         response.msg,
@@ -55,8 +53,65 @@ class AuthenticationBloc
         DriverLoginSuccessState(),
       );
     } else {
+      showSnackBar(
+        response.msg,
+      );
       emit(
         DriverLoginFailedState(),
+      );
+    }
+  }
+
+  Future<void> logOut(
+      DriverLogOutEvent event, Emitter<AuthenticationStates> emit) async {
+    emit(DriverLogOutLoadingState());
+    final response = await DioHelper().sendToServer(url: "logout", body: {
+      "device_token": "test",
+      "type": Platform.operatingSystem,
+    });
+
+    if (response.success) {
+      CacheHelper.removeLoginData();
+      emit(DriverLogOutSuccessState());
+      showSnackBar(
+        response.msg,
+        typ: MessageType.success,
+      );
+    } else {
+      showSnackBar(
+        response.msg,
+      );
+      emit(DriverLogOutFailedState());
+    }
+  }
+
+  Future<void> forgetPassword(DriverForgetPasswordEvent event,
+      Emitter<AuthenticationStates> emit) async {
+    emit(
+      DriverForgetPasswordLoadingState(),
+    );
+
+    final response = await DioHelper().sendToServer(
+      url: "forget_password",
+      body: {
+        "phone": event.phController,
+      },
+    );
+
+    if (response.success) {
+      showSnackBar(
+        response.msg,
+        typ: MessageType.success,
+      );
+      emit(
+        DriverForgetPasswordSuccessState(),
+      );
+    } else {
+      showSnackBar(
+        response.msg,
+      );
+      emit(
+        DriverForgetPasswordFailedState(),
       );
     }
   }
