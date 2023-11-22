@@ -99,7 +99,7 @@ class _AccountViewState extends State<AccountView> {
                             style: TextStyle(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor
+                              color: getMaterialColor()
                             ),
                           ),
                           SvgPicture.asset(

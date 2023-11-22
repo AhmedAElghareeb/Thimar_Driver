@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar_driver/core/design/app_input.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
 
 import 'app_button.dart';
 
@@ -39,7 +40,7 @@ class _AppStepsState extends State<AppSteps> {
                           6.r,
                         ),
                         color: currentIndex == 0
-                            ? Theme.of(context).primaryColor
+                            ? getMaterialColor()
                             : const Color(
                           0xffE4EFD9,
                         ),
@@ -64,7 +65,7 @@ class _AppStepsState extends State<AppSteps> {
                         fontSize: 13.sp,
                         fontWeight: FontWeight.bold,
                         color: currentIndex == 0
-                            ? Theme.of(context).primaryColor
+                            ? getMaterialColor()
                             : const Color(
                           0xffE4EFD9,
                         ),
@@ -92,7 +93,7 @@ class _AppStepsState extends State<AppSteps> {
                           6.r,
                         ),
                         color: currentIndex == 1
-                            ? Theme.of(context).primaryColor
+                            ? getMaterialColor()
                             : const Color(
                           0xffE4EFD9,
                         ),
@@ -117,7 +118,7 @@ class _AppStepsState extends State<AppSteps> {
                         fontSize: 13.sp,
                         fontWeight: FontWeight.bold,
                         color: currentIndex == 1
-                            ? Theme.of(context).primaryColor
+                            ? getMaterialColor()
                             : const Color(
                           0xffE4EFD9,
                         ),
@@ -249,16 +250,17 @@ class _AppStepsState extends State<AppSteps> {
                                   ),
                                   Text(
                                     "صورة رخصة القيادة",
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).primaryColor,
+                                      color: getMaterialColor(),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                width: 20.w,
+                                width: 10.w,
                               ),
                               Column(
                                 children: [
@@ -289,7 +291,7 @@ class _AppStepsState extends State<AppSteps> {
                                     style: TextStyle(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).primaryColor,
+                                      color: getMaterialColor(),
                                     ),
                                   ),
                                 ],
@@ -326,7 +328,7 @@ class _AppStepsState extends State<AppSteps> {
                                     style: TextStyle(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).primaryColor,
+                                      color: getMaterialColor(),
                                     ),
                                   ),
                                 ],
@@ -368,7 +370,7 @@ class _AppStepsState extends State<AppSteps> {
                                     style: TextStyle(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).primaryColor,
+                                      color: getMaterialColor(),
                                     ),
                                   ),
                                 ],
@@ -405,7 +407,7 @@ class _AppStepsState extends State<AppSteps> {
                                     style: TextStyle(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).primaryColor,
+                                      color: getMaterialColor(),
                                     ),
                                   ),
                                 ],

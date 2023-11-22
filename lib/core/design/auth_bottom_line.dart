@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
 
 class BottomLine extends StatelessWidget {
   const BottomLine({
@@ -20,7 +22,7 @@ class BottomLine extends StatelessWidget {
         Text(
           subText!,
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
+            color: getMaterialColor(),
             fontSize: 15.sp,
             fontWeight: FontWeight.bold,
           ),
@@ -30,7 +32,7 @@ class BottomLine extends StatelessWidget {
           child: Text(
             text!,
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: getMaterialColor(),
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
             ),

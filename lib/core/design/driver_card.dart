@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
 
 import '../logic/cache_helper.dart';
 
@@ -10,7 +11,7 @@ class DriverCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 217.h,
+      height: 230.h,
       padding: EdgeInsetsDirectional.symmetric(
         vertical: 25.h,
       ),
@@ -26,7 +27,7 @@ class DriverCard extends StatelessWidget {
             40.r,
           ),
         ),
-        color: Theme.of(context).primaryColor,
+        color: getMaterialColor(),
       ),
       child: Column(
         children: [

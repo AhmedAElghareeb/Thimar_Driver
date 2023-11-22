@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
 
 class AccountWidgets extends StatelessWidget {
   const AccountWidgets({
@@ -42,7 +43,7 @@ class AccountWidgets extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+                    color: getMaterialColor(),
                   ),
                 ),
               ],

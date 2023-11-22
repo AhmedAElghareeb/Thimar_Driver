@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               0xffFFFFFF,
             ),
             centerTitle: true,
-            elevation: 0.0,
+            elevation: 0,
             titleTextStyle: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,

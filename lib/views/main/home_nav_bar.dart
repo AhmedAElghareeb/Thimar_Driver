@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
 
 import 'account/view.dart';
 import 'home/view.dart';
@@ -64,7 +65,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
           ),
         ),
         elevation: 0.0,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: getMaterialColor(),
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         onTap: (index) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:thimar_driver/core/logic/helper_methods.dart';
 
 class AuthHeader extends StatelessWidget {
   const AuthHeader({
@@ -31,7 +32,7 @@ class AuthHeader extends StatelessWidget {
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
+              color: getMaterialColor(),
             ),
           ),
         ),
