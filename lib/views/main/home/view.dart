@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:thimar_driver/core/design/app_input.dart';
 import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
+import 'package:thimar_driver/features/home/events.dart';
 
-class HomeView extends StatelessWidget {
+import '../../../features/home/bloc.dart';
+
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final searchBloc = KiwiContainer().resolve<HomeBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +31,18 @@ class HomeView extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const AppInput(
+              AppInput(
+                controller: searchBloc.searchController,
                 isFilled: true,
                 labelText: "ابحث عن ما تريد ؟",
                 prefixIcon: "assets/icons/Search.svg",
+                onChanged: (value) {
+                  searchBloc.add(
+                    GetSearchDataEvent(
+                      keyWord: value.toString(),
+                    ),
+                  );
+                },
               ),
               SizedBox(
                 height: 26.h,
@@ -186,12 +205,10 @@ class HomeItems extends StatelessWidget {
                     (index) => Container(
                       width: 25.w,
                       height: 25.h,
-                      margin:
-                          EdgeInsetsDirectional.only(end: 3.w),
+                      margin: EdgeInsetsDirectional.only(end: 3.w),
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadiusDirectional.circular(
+                        borderRadius: BorderRadiusDirectional.circular(
                           7.r,
                         ),
                       ),
