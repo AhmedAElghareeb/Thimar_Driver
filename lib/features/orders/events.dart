@@ -5,3 +5,9 @@ class GetOrdersDataEvent extends OrdersEvents{
 
   GetOrdersDataEvent({required this.type});
 }
+
+class GetSearchData extends OrdersEvents {
+  final String keyWord;
+
+  GetSearchData({required this.keyWord});
+}

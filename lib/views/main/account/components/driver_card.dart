@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 
-import '../logic/cache_helper.dart';
+import '../../../../core/logic/cache_helper.dart';
 
 class DriverCard extends StatelessWidget {
   const DriverCard({super.key});

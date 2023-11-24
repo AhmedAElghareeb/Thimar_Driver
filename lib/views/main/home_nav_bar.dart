@@ -8,10 +8,10 @@ import 'home/view.dart';
 import 'notifications/view.dart';
 import 'orders/view.dart';
 
-
 class HomeNavBar extends StatefulWidget {
   final int index;
-  const HomeNavBar({super.key,this.index =0});
+
+  const HomeNavBar({super.key, this.index = 0});
 
   @override
   State<HomeNavBar> createState() => _HomeNavBarState();
@@ -40,15 +40,17 @@ class _HomeNavBarState extends State<HomeNavBar> {
     "notifications",
     "my_account",
   ];
+
   @override
   void initState() {
     super.initState();
-    if(widget.index!=0){
+    if (widget.index != 0) {
       setState(() {
-        currentIndex=widget.index;
+        currentIndex = widget.index;
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,10 +58,12 @@ class _HomeNavBarState extends State<HomeNavBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: List.generate(
           pages.length,
-              (index) => BottomNavigationBarItem(
+          (index) => BottomNavigationBarItem(
             icon: SvgPicture.asset(
               "assets/icons/${icons[index]}.svg",
-              color: currentIndex == index ? Colors.white : const Color(0xFFB9C9A8),
+              color: currentIndex == index
+                  ? Colors.white
+                  : const Color(0xFFB9C9A8),
             ),
             label: titles[index],
           ),
@@ -68,8 +72,8 @@ class _HomeNavBarState extends State<HomeNavBar> {
         backgroundColor: getMaterialColor(),
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        onTap: (index) {
-          currentIndex = index;
+        onTap: (i) {
+          currentIndex = i;
           setState(() {});
         },
         selectedItemColor: Colors.white,

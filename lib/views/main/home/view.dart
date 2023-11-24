@@ -17,7 +17,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final searchBloc = KiwiContainer().resolve<HomeBloc>();
+  final bloc = KiwiContainer().resolve<HomeBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,12 @@ class _HomeViewState extends State<HomeView> {
           child: Column(
             children: [
               AppInput(
-                controller: searchBloc.searchController,
+                controller: bloc.searchController,
                 isFilled: true,
                 labelText: "ابحث عن ما تريد ؟",
                 prefixIcon: "assets/icons/Search.svg",
                 onChanged: (value) {
-                  searchBloc.add(
+                  bloc.add(
                     GetSearchDataEvent(
                       keyWord: value.toString(),
                     ),

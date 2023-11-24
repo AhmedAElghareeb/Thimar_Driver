@@ -3,13 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar_driver/core/design/driver_card.dart';
+import 'package:thimar_driver/views/main/account/components/driver_card.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
 import 'package:thimar_driver/views/auth/login.dart';
 
-import '../../../core/design/account_widgets.dart';
 import '../../../features/authentication/bloc.dart';
 
 class AccountView extends StatefulWidget {
@@ -22,6 +21,30 @@ class AccountView extends StatefulWidget {
 class _AccountViewState extends State<AccountView> {
   final bloc = KiwiContainer().resolve<AuthenticationBloc>();
 
+  List<String> titles = [
+    "البيانات الشخصية",
+    "المحفظة",
+    "عن التطبيق",
+    "أسئلة متكررة",
+    "سياسة الخصوصية",
+    "تواصل معنا",
+    "الشكاوي والأقتراحات",
+    "اللغة",
+  ];
+
+  List<String> icons = [
+    "person.svg",
+    "wallet.svg",
+    "about_us.svg",
+    "question.svg",
+    "policy.svg",
+    "contact_us.svg",
+    "conditions.svg",
+    "language.svg",
+  ];
+
+  // List<Widget> pages = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,45 +52,61 @@ class _AccountViewState extends State<AccountView> {
         child: Column(
           children: [
             const DriverCard(),
-            AccountWidgets(
-              onPress: () {},
-              title: "البيانات الشخصية",
-              imageName: "person.svg",
-            ),
-            AccountWidgets(
-              onPress: () {},
-              title: "المحفظة",
-              imageName: "person.svg",
-            ),
-            AccountWidgets(
-              onPress: () {},
-              title: "عن التطبيق",
-              imageName: "person.svg",
-            ),
-            AccountWidgets(
-              onPress: () {},
-              title: "أسئلة متكررة",
-              imageName: "person.svg",
-            ),
-            AccountWidgets(
-              onPress: () {},
-              title: "سياسة الخصوصية",
-              imageName: "person.svg",
-            ),
-            AccountWidgets(
-              onPress: () {},
-              title: "تواصل معنا",
-              imageName: "person.svg",
-            ),
-            AccountWidgets(
-              onPress: () {},
-              title: "تغيير اللغة",
-              imageName: "person.svg",
-            ),
-            AccountWidgets(
-              onPress: () {},
-              title: "الشكاوي والأقتراحات",
-              imageName: "person.svg",
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    // navigateTo(
+                    //   pages[index],
+                    // );
+                  },
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: 20.w,
+                      end: 20.w,
+                      top: 15.h,
+                      bottom: 15.h,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              "assets/icons/${icons[index]}",
+                              width: 18.w,
+                              height: 18.h,
+                              fit: BoxFit.scaleDown,
+                              color: getMaterialColor(),
+                            ),
+                            SizedBox(
+                              width: 16.w,
+                            ),
+                            Text(
+                              titles[index],
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.bold,
+                                color: getMaterialColor(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SvgPicture.asset(
+                          "assets/icons/arrow_left.svg",
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                separatorBuilder: (context, index) => Divider(
+                  indent: 10.w,
+                  endIndent: 10.w,
+                  color: const Color(0xffF6F6F6),
+                ),
+                itemCount: titles.length,
+              ),
             ),
             BlocBuilder(
               bloc: bloc,
@@ -97,10 +136,9 @@ class _AccountViewState extends State<AccountView> {
                           Text(
                             "تسجيل الخروج",
                             style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.bold,
-                              color: getMaterialColor()
-                            ),
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
+                                color: getMaterialColor()),
                           ),
                           SvgPicture.asset(
                             "assets/icons/exit.svg",
