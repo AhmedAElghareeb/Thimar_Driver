@@ -17,7 +17,10 @@ class AboutApp extends StatefulWidget {
 }
 
 class _AboutAppState extends State<AboutApp> {
-  final bloc = KiwiContainer().resolve<AboutAppBloc>();
+  final bloc = KiwiContainer().resolve<AboutAppBloc>()
+    ..add(
+      GetAboutAppDataEvent(),
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +43,9 @@ class _AboutAppState extends State<AboutApp> {
               height: 50.h,
             ),
             BlocBuilder(
-              bloc: bloc
-                ..add(
-                  GetAboutAppDataEvent(),
-                ),
+              bloc: bloc,
               builder: (context, state) {
-                if(state is GetAboutAppDataLoadingState) {
+                if (state is GetAboutAppDataLoadingState) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
