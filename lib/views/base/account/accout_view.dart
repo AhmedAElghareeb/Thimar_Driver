@@ -3,12 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:thimar_driver/views/main/account/components/driver_card.dart';
+import 'package:thimar_driver/views/base/account/about_app.dart';
+import 'package:thimar_driver/views/base/account/components/driver_card.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
 import 'package:thimar_driver/views/auth/login.dart';
-
+import 'package:thimar_driver/views/base/account/contact_us.dart';
+import 'package:thimar_driver/views/base/account/faqs.dart';
+import 'package:thimar_driver/views/base/account/personal_data.dart';
+import 'package:thimar_driver/views/base/account/policy.dart';
+import 'package:thimar_driver/views/base/account/suggestions_complaints.dart';
+import 'package:thimar_driver/views/base/account/wallet.dart';
 import '../../../features/authentication/bloc.dart';
 
 class AccountView extends StatefulWidget {
@@ -43,7 +49,15 @@ class _AccountViewState extends State<AccountView> {
     "language.svg",
   ];
 
-  // List<Widget> pages = [];
+  List<Widget> pages = [
+    const PersonalData(),
+    const Wallet(),
+    const AboutApp(),
+    const Faqs(),
+    const Policy(),
+    const ContactUs(),
+    const SuggestionsAndComplaints(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +70,9 @@ class _AccountViewState extends State<AccountView> {
               child: ListView.separated(
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    // navigateTo(
-                    //   pages[index],
-                    // );
+                    navigateTo(
+                      pages[index],
+                    );
                   },
                   child: Padding(
                     padding: EdgeInsetsDirectional.only(
@@ -136,9 +150,10 @@ class _AccountViewState extends State<AccountView> {
                           Text(
                             "تسجيل الخروج",
                             style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.bold,
-                                color: getMaterialColor()),
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
+                              color: getMaterialColor(),
+                            ),
                           ),
                           SvgPicture.asset(
                             "assets/icons/exit.svg",

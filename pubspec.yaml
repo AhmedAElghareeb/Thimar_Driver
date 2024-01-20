@@ -46,6 +46,7 @@ dependencies:
   kiwi: ^4.1.0
   easy_stepper: ^0.6.0
   dotted_border: ^2.1.0
+  flutter_html: ^3.0.0-alpha.5
 
 dev_dependencies:
   flutter_test:

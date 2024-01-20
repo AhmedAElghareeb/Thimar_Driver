@@ -7,11 +7,11 @@ import 'package:thimar_driver/features/orders/search_model.dart';
 import 'package:thimar_driver/features/orders/states.dart';
 
 class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
-  OrdersBloc() : super(OrdersStates()) {
+  OrdersBloc(this.dioHelper) : super(OrdersStates()) {
     on<GetOrdersDataEvent>(getData);
     on<GetSearchData>(getSearch);
   }
-
+  final DioHelper dioHelper;
   final searchController = TextEditingController();
 
   Future<void> getData(
@@ -20,7 +20,7 @@ class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
       GetOrdersDataLoadingState(),
     );
 
-    final response = await DioHelper().getFromServer(
+    final response = await dioHelper.getFromServer(
       url: "driver/${event.type}",
     );
 
@@ -40,7 +40,7 @@ class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
 
   Future<void> getSearch(
       GetSearchData event, Emitter<OrdersStates> emit) async {
-    final response = await DioHelper().getFromServer(
+    final response = await dioHelper.getFromServer(
       url: "driver/search_current",
       params: {
         "keyword": searchController.text,

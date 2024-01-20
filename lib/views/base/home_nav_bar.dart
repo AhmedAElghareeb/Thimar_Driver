@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 
-import 'account/view.dart';
+import 'account/accout_view.dart';
 import 'home/view.dart';
 import 'notifications/view.dart';
 import 'orders/view.dart';

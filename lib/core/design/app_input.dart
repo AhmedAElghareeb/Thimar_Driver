@@ -93,7 +93,6 @@ class _AppInputState extends State<AppInput> {
               ),
             ),
           ),
-          // focusColor: getMaterialColor(),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.r),
             borderSide: BorderSide(

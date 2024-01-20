@@ -6,15 +6,17 @@ import 'package:thimar_driver/features/notifications/states.dart';
 import 'model.dart';
 
 class NotificationsBloc extends Bloc<NotificationsEvents, NotificationsStates> {
-  NotificationsBloc() : super(NotificationsStates()) {
+  NotificationsBloc(this.dioHelper) : super(NotificationsStates()) {
     on<GetNotificationsEvent>(getData);
   }
+
+  final DioHelper dioHelper;
 
   Future<void> getData(
       GetNotificationsEvent event, Emitter<NotificationsStates> emit) async {
     emit(NotificationsLoadingState());
 
-    final response = await DioHelper().getFromServer(
+    final response = await dioHelper.getFromServer(
       url: "notifications",
     );
 

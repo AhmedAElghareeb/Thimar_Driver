@@ -4,7 +4,6 @@ import 'package:kiwi/kiwi.dart';
 import 'package:thimar_driver/features/notifications/bloc.dart';
 import 'package:thimar_driver/features/notifications/events.dart';
 import 'package:thimar_driver/features/notifications/states.dart';
-
 import 'card.dart';
 
 class NotificationsView extends StatefulWidget {
@@ -27,7 +26,6 @@ class _NotificationsViewState extends State<NotificationsView> {
         title: const Text(
           "الإشعارات",
         ),
-        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: BlocBuilder(

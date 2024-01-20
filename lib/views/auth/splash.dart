@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thimar_driver/views/auth/login.dart';
-import 'package:thimar_driver/views/main/home_nav_bar.dart';
+import 'package:thimar_driver/views/base/home_nav_bar.dart';
 
 import '../../core/logic/cache_helper.dart';
 import '../../core/logic/helper_methods.dart';

@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
               color: getMaterialColor(),
             ),
           ),
+          useMaterial3: false,
           primarySwatch: getMaterialColor(),
           platform: TargetPlatform.iOS,
           fontFamily: "Tajawal",

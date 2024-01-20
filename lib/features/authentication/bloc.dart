@@ -6,18 +6,18 @@ import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/dio_helper.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/login_model.dart';
-import 'package:thimar_driver/views/main/home_nav_bar.dart';
+import 'package:thimar_driver/views/base/home_nav_bar.dart';
 import 'events.dart';
 import 'states.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvents, AuthenticationStates> {
-  AuthenticationBloc() : super(AuthenticationStates()) {
+  AuthenticationBloc(this.dioHelper) : super(AuthenticationStates()) {
     on<DriverLoginEvent>(login);
     on<DriverForgetPasswordEvent>(forgetPassword);
     on<DriverLogOutEvent>(logOut);
   }
-
+  final DioHelper dioHelper;
   final formKey = GlobalKey<FormState>();
 
   Future<void> login(
@@ -26,7 +26,7 @@ class AuthenticationBloc
       DriverLoginLoadingState(),
     );
 
-    final response = await DioHelper().sendToServer(url: "login", body: {
+    final response = await dioHelper.sendToServer(url: "login", body: {
       "phone": event.phController.text,
       "password": event.passController.text,
       "device_token": "test",
