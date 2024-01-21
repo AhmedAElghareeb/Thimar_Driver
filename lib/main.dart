@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
                   15.r,
                 ),
               ),
-              minimumSize: Size(
+              maximumSize: Size(
                 343.w,
                 60.h,
               ),

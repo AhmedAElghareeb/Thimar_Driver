@@ -15,7 +15,7 @@ class DriverOrdersData {
 }
 
 class DriverOrdersModel {
-  late final num id;
+  late final int id;
   late final String status;
   late final String date;
   late final String time;
@@ -25,7 +25,7 @@ class DriverOrdersModel {
   late final String clientName;
   late final String clientImage;
   late final String phone;
-  late final Address address;
+  late final OrdersAddress address;
   late final String location;
   late final List<Images> images;
   late final String payType;
@@ -42,7 +42,7 @@ class DriverOrdersModel {
     clientName = json['client_name'] ?? "";
     clientImage = json['client_image'] ?? "";
     phone = json['phone'] ?? "";
-    address = Address.fromJson(json['address']);
+    address = OrdersAddress.fromJson(json['address']);
     location = json['location'] ?? "";
     images = List.from(json['images'] ?? []).map((e)=>Images.fromJson(e)).toList();
     payType = json['pay_type'] ?? "";
@@ -50,7 +50,7 @@ class DriverOrdersModel {
   }
 }
 
-class Address {
+class OrdersAddress {
   late final num id;
   late final String type;
   late final double lat;
@@ -63,7 +63,7 @@ class Address {
   late final String createdAt;
   late final String updatedAt;
 
-  Address.fromJson(Map<String, dynamic> json){
+  OrdersAddress.fromJson(Map<String, dynamic> json){
     id = json['id'] ?? 0;
     type = json['type'] ?? "";
     lat = json['lat'] ?? 0.0;

@@ -8,6 +8,8 @@ class AppButton extends StatelessWidget {
     this.backColor,
     this.textColor,
     this.isLoading = false,
+    this.width = 343,
+    this.height = 60,
   });
 
   final VoidCallback onPress;
@@ -15,6 +17,7 @@ class AppButton extends StatelessWidget {
   final Color? backColor;
   final Color? textColor;
   final bool isLoading;
+  final double width, height;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +28,18 @@ class AppButton extends StatelessWidget {
           )
         : FilledButton(
             onPressed: onPress,
+            style: OutlinedButton.styleFrom(
+              minimumSize: Size(
+                width,
+                height,
+              ),
+              backgroundColor: backColor
+            ),
             child: Text(
               text,
+              style: TextStyle(
+                color: textColor,
+              ),
             ),
           );
   }

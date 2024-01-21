@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:thimar_driver/features/home/home_model.dart';
 
 import '../../../core/logic/helper_methods.dart';
 import '../../../features/orders/model.dart';
+import 'order_details.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({super.key,
-    required this.item,
+    required this.item, this.model, this.address,
   });
 
   final DriverOrdersModel item;
+
+  final PendingOrdersModel? model;
+  final Address? address;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // navigateTo(
-        //   OrderDetails(
-        //     id: item.id,
-        //   ),
-        // );
+        navigateTo(
+          OrderDetails(
+            id: item.id,
+            model: model!,
+            address: address!,
+          ),
+        );
       },
       child: Container(
         padding: EdgeInsetsDirectional.symmetric(
