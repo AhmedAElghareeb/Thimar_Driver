@@ -47,6 +47,7 @@ dependencies:
   easy_stepper: ^0.6.0
   dotted_border: ^2.1.0
   flutter_html: ^3.0.0-alpha.5
+  google_maps_flutter: ^2.5.3
 
 dev_dependencies:
   flutter_test:

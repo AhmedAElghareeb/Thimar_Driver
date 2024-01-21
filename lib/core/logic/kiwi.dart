@@ -1,6 +1,8 @@
-import 'package:kiwi/kiwi.dart';
-import '../../features/account/faqs/bloc.dart';
 import 'dio_helper.dart';
+import 'package:kiwi/kiwi.dart';
+import '../../features/account/contact_us/bloc.dart';
+import '../../features/account/faqs/bloc.dart';
+import '../../features/account/suggestions_complaints/bloc.dart';
 import '../../features/account/about_app/bloc.dart';
 import '../../features/account/policy/bloc.dart';
 import '../../features/authentication/bloc.dart';
@@ -21,4 +23,6 @@ void initKiwi() {
   c.registerFactory((container) => AboutAppBloc(container.resolve<DioHelper>()));
   c.registerFactory((container) => PolicyBloc(container.resolve<DioHelper>()));
   c.registerFactory((container) => FaqsBloc(container.resolve<DioHelper>()));
+  c.registerFactory((container) => SuggestionsAndComplaintsBloc(container.resolve<DioHelper>()));
+  c.registerFactory((container) => ContactUsBloc(container.resolve<DioHelper>()));
 }

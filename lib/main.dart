@@ -3,10 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/kiwi.dart';
-
 import 'core/logic/helper_methods.dart';
-import 'views/auth/login.dart';
-import 'views/auth/register.dart';
 import 'views/auth/splash.dart';
 
 void main() {
