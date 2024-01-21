@@ -17,6 +17,14 @@ class AuthenticationBloc
     on<DriverForgetPasswordEvent>(forgetPassword);
     on<DriverLogOutEvent>(logOut);
   }
+
+  TextEditingController phController = TextEditingController(
+    // text: "966541236423",
+  );
+  TextEditingController passController = TextEditingController(
+    // text: "123456789",
+  );
+
   final DioHelper dioHelper;
   final formKey = GlobalKey<FormState>();
 
@@ -27,8 +35,8 @@ class AuthenticationBloc
     );
 
     final response = await dioHelper.sendToServer(url: "login", body: {
-      "phone": event.phController.text,
-      "password": event.passController.text,
+      "phone": phController.text,
+      "password": passController.text,
       "device_token": "test",
       "type": Platform.operatingSystem,
       "user_type": "driver",
@@ -94,7 +102,7 @@ class AuthenticationBloc
     final response = await DioHelper().sendToServer(
       url: "forget_password",
       body: {
-        "phone": event.phController,
+        "phone": phController.text,
       },
     );
 

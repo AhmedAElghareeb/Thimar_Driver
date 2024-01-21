@@ -25,8 +25,6 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final bloc = KiwiContainer().resolve<AuthenticationBloc>();
 
-  final _event = DriverLoginEvent();
-
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -59,7 +57,7 @@ class _LoginViewState extends State<LoginView> {
                         height: 28.h,
                       ),
                       AppInput(
-                        controller: _event.phController,
+                        controller: bloc.phController,
                         labelText: "رقم الجوال",
                         keyboardType: TextInputType.phone,
                         prefixIcon: "assets/icons/call.svg",
@@ -74,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
                         height: 16.h,
                       ),
                       AppInput(
-                        controller: _event.passController,
+                        controller: bloc.passController,
                         labelText: "كلمة المرور",
                         keyboardType: TextInputType.visiblePassword,
                         isPassword: true,

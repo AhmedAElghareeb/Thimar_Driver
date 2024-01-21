@@ -25,8 +25,6 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
 
   final bloc = KiwiContainer().resolve<AuthenticationBloc>();
 
-  final _event = DriverForgetPasswordEvent();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,7 +56,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                       height: 28.h,
                     ),
                     AppInput(
-                      controller: _event.phController,
+                      controller: bloc.phController,
                       keyboardType: TextInputType.phone,
                       labelText: "رقم الجوال",
                       prefixIcon: "assets/icons/call.svg",
