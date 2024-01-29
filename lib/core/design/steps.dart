@@ -1,9 +1,12 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:thimar_driver/core/design/app_input.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
+import 'package:thimar_driver/views/auth/cities/cities_data.dart';
 
+import '../../features/authentication/bloc.dart';
 import 'app_button.dart';
 
 class AppSteps extends StatefulWidget {
@@ -15,6 +18,8 @@ class AppSteps extends StatefulWidget {
 
 class _AppStepsState extends State<AppSteps> {
   int currentIndex = 0;
+
+  final bloc = KiwiContainer().resolve<AuthenticationBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +146,8 @@ class _AppStepsState extends State<AppSteps> {
                           SizedBox(
                             height: 15.h,
                           ),
-                          const AppInput(
+                          AppInput(
+                            controller: bloc.fullNameController,
                             labelText: "اسم المندوب",
                             prefixIcon: "assets/icons/person.svg",
                             keyboardType: TextInputType.name,
@@ -149,7 +155,8 @@ class _AppStepsState extends State<AppSteps> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          const AppInput(
+                          AppInput(
+                            controller: bloc.phController,
                             labelText: "رقم الجوال",
                             prefixIcon: "assets/icons/call.svg",
                             keyboardType: TextInputType.phone,
@@ -157,9 +164,53 @@ class _AppStepsState extends State<AppSteps> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          const AppInput(
-                            labelText: "المدينة",
-                            prefixIcon: "assets/icons/flag.svg",
+                          StatefulBuilder(
+                            builder: (context, setState) => GestureDetector(
+                              onTap: () async {
+                                var result = await showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => const CitiesData(),
+                                );
+                                if (result != null) {
+                                  bloc.selectedCity = result;
+                                  setState(() {});
+                                }
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: AbsorbPointer(
+                                      absorbing: true,
+                                      child: AppInput(
+                                        labelText:
+                                        bloc.selectedCity?.name ?? "المدينة",
+                                        validator: (value) {
+                                          if (bloc.selectedCity == null) {
+                                            return "حقل المدينة مطلوب";
+                                          }
+                                          return null;
+                                        },
+                                        prefixIcon:
+                                        "assets/icons/flag.svg",
+                                      ),
+                                    ),
+                                  ),
+                                  if (bloc.selectedCity != null)
+                                    IconButton(
+                                      onPressed: () {
+                                        bloc.selectedCity = null;
+                                        setState(() {});
+                                      },
+                                      icon: Icon(
+                                        Icons.clear,
+                                        size: 24.w.h,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 10.h,
@@ -187,30 +238,48 @@ class _AppStepsState extends State<AppSteps> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          const AppInput(
+                          AppInput(
+                            controller: bloc.passController,
                             labelText: "كلمة المرور",
                             prefixIcon: "assets/icons/lock.svg",
                             isPassword: true,
                             keyboardType: TextInputType.visiblePassword,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "حقل المدينة مطلوب";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 10.h,
                           ),
-                          const AppInput(
+                          AppInput(
+                            controller: bloc.confirmPassController,
                             labelText: "تأكيد كلمة المرور",
                             prefixIcon: "assets/icons/lock.svg",
                             isPassword: true,
                             keyboardType: TextInputType.visiblePassword,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "حقل المدينة مطلوب";
+                              } else if (value.toString() != bloc.passController.text) {
+                                return "كلمتا المرور غير متطابقتين";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 10.h,
                           ),
                           AppButton(
                             onPress: () {
-                              currentIndex = 1;
-                              setState(
-                                () {},
-                              );
+                              if(bloc.formKey.currentState!.validate()) {
+                                currentIndex = 1;
+                                setState(
+                                      () {},
+                                );
+                              }
                             },
                             text: "التالي",
                           ),

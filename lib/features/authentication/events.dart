@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
-
 class AuthenticationEvents {}
 
+class GetCitiesDataEvent extends AuthenticationEvents {}
+
 class DriverLoginEvent extends AuthenticationEvents {}
+
+class DriverRegisterEvent extends AuthenticationEvents {}
 
 class DriverForgetPasswordEvent extends AuthenticationEvents {}
 

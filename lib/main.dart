@@ -1,13 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/kiwi.dart';
 import 'core/logic/helper_methods.dart';
+import 'firebase_options.dart';
 import 'views/auth/splash.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.instance.getToken().then((value) {
+    print(
+      "Token is : $value",
+    );
+  });
   initKiwi();
   CacheHelper.init();
   SystemChrome.setSystemUIOverlayStyle(
@@ -77,10 +88,8 @@ class MyApp extends StatelessWidget {
                 343.w,
                 60.h,
               ),
-              textStyle: TextStyle(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold
-              ),
+              textStyle:
+                  TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
               side: const BorderSide(
                 color: Color(0xFFFFE1E1),
               ),

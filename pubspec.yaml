@@ -49,6 +49,9 @@ dependencies:
   flutter_html: ^3.0.0-alpha.5
   google_maps_flutter: ^2.5.3
   map_launcher: ^3.1.0
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
+  firebase_analytics: ^10.8.0
 
 dev_dependencies:
   flutter_test:
