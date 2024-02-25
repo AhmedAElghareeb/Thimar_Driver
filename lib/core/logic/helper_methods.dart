@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 MaterialColor getMaterialColor() {
   Color color = const Color(0xFF4C8613);
@@ -26,11 +29,12 @@ Future navigateTo(Widget page, {bool removeHistory = false}) {
     MaterialPageRoute(
       builder: (context) => page,
     ),
-        (route) => true,
+    (route) => true,
   );
 }
 
 enum MessageType { success, fail, warning }
+
 void showSnackBar(String message, {MessageType typ = MessageType.fail}) {
   if (message.isNotEmpty) {
     ScaffoldMessenger.of(navigatorKey.currentState!.context).showSnackBar(
@@ -42,8 +46,8 @@ void showSnackBar(String message, {MessageType typ = MessageType.fail}) {
         backgroundColor: typ == MessageType.fail
             ? Colors.red
             : typ == MessageType.warning
-            ? Colors.yellow
-            : Colors.green,
+                ? Colors.yellow
+                : Colors.green,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
@@ -86,7 +90,11 @@ Color getOrderStatusColor(String status) {
       return const Color(0xffFFCFCF);
 
     default:
-      return Theme.of(navigatorKey.currentState!.context).primaryColor.withOpacity(0.5,);
+      return Theme.of(navigatorKey.currentState!.context)
+          .primaryColor
+          .withOpacity(
+            0.5,
+          );
   }
 }
 
@@ -104,6 +112,117 @@ Color getOrderStatusTextColor(String status) {
       return const Color(0xffFF0000);
 
     default:
-      return Theme.of(navigatorKey.currentState!.context).primaryColor.withOpacity(0.5,);
+      return Theme.of(navigatorKey.currentState!.context)
+          .primaryColor
+          .withOpacity(
+            0.5,
+          );
   }
+}
+
+Future<void> getMaps(double lat, double lng) async {
+  final availableMaps = await MapLauncher.installedMaps;
+  print(availableMaps);
+  if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
+    await availableMaps.first.showMarker(
+      coords: Coords(lat, lng),
+      title: "test",
+    );
+  }
+}
+
+Future<File> uploadPhoto({required BuildContext context, File? selectedImage}) async {
+  await showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(38.r), topRight: Radius.circular(38.r))),
+    builder: (context) => Container(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Padding(
+        padding: EdgeInsets.all(16.r),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close)),
+                const Text(
+                  "إختار صورة من",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 32.r,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    final image = await ImagePicker.platform.pickImage(
+                      source: ImageSource.gallery,
+                      imageQuality: 30,
+                    );
+                    if (image != null) {
+                      selectedImage = File(image.path);
+                      debugPrint(image.path);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.image_rounded,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(
+                        width: 8.w,
+                      ),
+                      const Text("المعرض"),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    final image2 = await ImagePicker.platform.pickImage(
+                      source: ImageSource.camera,
+                      imageQuality: 30,
+                    );
+                    if (image2 != null) {
+                      selectedImage = File(image2.path);
+                      debugPrint(image2.path);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(
+                        width: 8.w,
+                      ),
+                      const Text("الكاميرا"),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  return selectedImage!;
 }

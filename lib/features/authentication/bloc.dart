@@ -1,13 +1,14 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/dio_helper.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
+import 'package:thimar_driver/features/authentication/cars_model.dart';
 import 'package:thimar_driver/features/authentication/login_model.dart';
+import 'package:thimar_driver/features/authentication/profile_model.dart';
 import 'package:thimar_driver/views/base/home_nav_bar.dart';
 import 'city_model.dart';
 import 'events.dart';
@@ -17,24 +18,21 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvents, AuthenticationStates> {
   AuthenticationBloc(this.dioHelper) : super(AuthenticationStates()) {
     on<GetCitiesDataEvent>(cities);
+    on<GetCarsDataEvent>(cars);
     on<DriverLoginEvent>(login);
     on<DriverRegisterEvent>(register);
     on<DriverForgetPasswordEvent>(forgetPassword);
     on<DriverLogOutEvent>(logOut);
+    on<GetProfileDataEvent>(getProfileData);
   }
 
   File? licenseImage, carFormImage, carInsurance, frontCarImage, backCarImage;
 
-  late int modelId, cityId;
-
   CityModel? selectedCity;
+  CarsModel? selectedCar;
 
   final phController = TextEditingController();
   final passController = TextEditingController();
-  final fullNameController = TextEditingController();
-  final identityNumberController = TextEditingController();
-  final emailController = TextEditingController();
-  final confirmPassController = TextEditingController();
   final iBanController = TextEditingController();
   final bankNameController = TextEditingController();
   final carTypeController = TextEditingController();
@@ -65,6 +63,32 @@ class AuthenticationBloc
     } else {
       emit(
         GetCitiesDataFailedState(),
+      );
+    }
+  }
+
+  Future<void> cars(
+      GetCarsDataEvent event, Emitter<AuthenticationStates> emit) async {
+    emit(
+      GetCarsDataLoadingState(),
+    );
+
+    final response = await dioHelper.getFromServer(
+      url: "car_models",
+    );
+
+    if (response.success) {
+
+      final list = CarsData.fromJson(response.response!.data);
+
+      emit(
+        GetCarsDataSuccessState(
+          data: list.data,
+        ),
+      );
+    } else {
+      emit(
+        GetCarsDataFailedState(),
       );
     }
   }
@@ -172,38 +196,23 @@ class AuthenticationBloc
     final response = await dioHelper.sendToServer(
       url: "driver_register",
       body: {
-        "fullname": fullNameController.text,
-        "phone": phController.text,
+        "fullname": event.name,
+        "phone": event.phone,
         "city_id": selectedCity!.id,
-        "lat": "",
-        "lng": "",
+        "lat": CacheHelper.getLat(),
+        "lng": CacheHelper.getLongitude(),
         "location": "",
-        "identity_number": identityNumberController.text,
-        "email": emailController.text,
-        "password": passController.text,
-        "password_confirmation": confirmPassController.text,
-        "car_licence_image": MultipartFile.fromFileSync(
-          licenseImage!.path,
-          filename: licenseImage!.path.split("/").last,
-        ),
-        "car_form_image": MultipartFile.fromFileSync(
-          carFormImage!.path,
-          filename: carFormImage!.path.split("/").last,
-        ),
-        "car_insurance_image": MultipartFile.fromFileSync(
-          carInsurance!.path,
-          filename: carInsurance!.path.split("/").last,
-        ),
-        "car_front_image": MultipartFile.fromFileSync(
-          frontCarImage!.path,
-          filename: frontCarImage!.path.split("/").last,
-        ),
-        "car_back_image": MultipartFile.fromFileSync(
-          backCarImage!.path,
-          filename: backCarImage!.path.split("/").last,
-        ),
+        "identity_number": event.id,
+        "email": event.email,
+        "password": event.password,
+        "password_confirmation": event.confirmPassword,
+        "car_licence_image": dioHelper.getMultiPartImage(licenseImage!.path),
+        "car_form_image": dioHelper.getMultiPartImage(carFormImage!.path),
+        "car_insurance_image": dioHelper.getMultiPartImage(carInsurance!.path),
+        "car_front_image": dioHelper.getMultiPartImage(frontCarImage!.path),
+        "car_back_image": dioHelper.getMultiPartImage(backCarImage!.path),
         "car_type": carTypeController.text,
-        "model_id": carModelController.text,
+        "model_id": selectedCar!.id,
         "iban": iBanController.text,
         "bank_name": bankNameController.text,
       },
@@ -212,13 +221,38 @@ class AuthenticationBloc
     if (response.success) {
       emit(
         DriverRegisterSuccessState(
+          context: event.context,
           msg: response.msg,
         ),
       );
     } else {
       emit(
         DriverRegisterFailedState(
+          context: event.context,
           msg: response.msg,
+        ),
+      );
+    }
+  }
+
+  void getProfileData(
+      GetProfileDataEvent event, Emitter<AuthenticationStates> emit) async {
+    emit(GetProfileLoadingState());
+
+    final response = await dioHelper.getFromServer(
+      url: "driver/profile",
+    );
+    final data = ProfileData.fromJson(response.response!.data);
+    if (response.success) {
+      emit(
+        GetProfileSuccessState(
+          data: data,
+        ),
+      );
+    } else {
+      emit(
+        GetProfileErrorState(
+          message: response.msg,
         ),
       );
     }

@@ -11,7 +11,7 @@ import 'package:thimar_driver/features/authentication/bloc.dart';
 import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
 import 'package:thimar_driver/views/auth/forget_password.dart';
-import 'package:thimar_driver/views/auth/register.dart';
+import 'package:thimar_driver/views/auth/register_driver_info.dart';
 
 import '../../core/design/auth_bottom_line.dart';
 
