@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thimar_driver/core/logic/cache_helper.dart';
@@ -77,11 +78,9 @@ class AuthenticationBloc
     final response = await dioHelper.sendToServer(url: "login", body: {
       "phone": phController.text,
       "password": passController.text,
-      "device_token": "test",
+      "device_token": FirebaseMessaging.instance.getToken(),
       "type": Platform.operatingSystem,
       "user_type": "driver",
-      "lat": "",
-      "lng": "",
     });
 
     if (response.success) {
@@ -114,12 +113,12 @@ class AuthenticationBloc
       DriverLogOutEvent event, Emitter<AuthenticationStates> emit) async {
     emit(DriverLogOutLoadingState());
     final response = await DioHelper().sendToServer(url: "logout", body: {
-      "device_token": "test",
+      "device_token": FirebaseMessaging.instance.getToken(),
       "type": Platform.operatingSystem,
     });
 
     if (response.success) {
-      CacheHelper.removeLoginData();
+      CacheHelper.removeLoginInfo();
       emit(DriverLogOutSuccessState());
       showSnackBar(
         response.msg,
