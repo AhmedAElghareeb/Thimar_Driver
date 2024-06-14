@@ -11,3 +11,9 @@ class GetSearchData extends OrdersEvents {
 
   GetSearchData({required this.keyWord});
 }
+
+class GetOrderDetailsDataEvent extends OrdersEvents{
+  final int id;
+
+  GetOrderDetailsDataEvent(this.id);
+}

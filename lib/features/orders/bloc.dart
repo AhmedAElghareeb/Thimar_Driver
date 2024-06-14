@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thimar_driver/core/logic/dio_helper.dart';
 import 'package:thimar_driver/features/orders/events.dart';
 import 'package:thimar_driver/features/orders/model.dart';
+import 'package:thimar_driver/features/orders/order_details_maodel.dart';
 import 'package:thimar_driver/features/orders/search_model.dart';
 import 'package:thimar_driver/features/orders/states.dart';
 
 class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
   OrdersBloc(this.dioHelper) : super(OrdersStates()) {
     on<GetOrdersDataEvent>(getData);
+    on<GetOrderDetailsDataEvent>(getDetails);
     on<GetSearchData>(getSearch);
   }
   final DioHelper dioHelper;
@@ -34,6 +36,30 @@ class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
     } else {
       emit(
         GetOrdersDataFailedState(),
+      );
+    }
+  }
+
+  Future<void> getDetails(
+      GetOrderDetailsDataEvent event, Emitter<OrdersStates> emit) async {
+    emit(
+      GetOrdersDetailsDataLoadingState(),
+    );
+
+    final response = await dioHelper.getFromServer(
+      url: "driver/orders/${event.id}",
+    );
+
+    if (response.success) {
+      final data = OrderDetailsData.fromJson(response.response!.data).data;
+      emit(
+        GetOrdersDetailsDataSuccessState(
+          model: data,
+        ),
+      );
+    } else {
+      emit(
+        GetOrdersDetailsDataFailedState(),
       );
     }
   }

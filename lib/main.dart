@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +16,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.instance.getToken().then((value) {
-    print(
+    if (kDebugMode) {
+      print(
       "Token is : $value",
     );
+    }
   });
   initKiwi();
   CacheHelper.init();
@@ -29,6 +32,7 @@ void main() async {
       statusBarIconBrightness: Brightness.light,
     ),
   );
+  await ScreenUtil.ensureScreenSize();
   runApp(const MyApp());
 }
 
@@ -42,6 +46,8 @@ class MyApp extends StatelessWidget {
         375,
         815,
       ),
+      minTextAdapt: true,
+      splitScreenMode: true,
       builder: (context, child) => MaterialApp(
         builder: (context, child) => Directionality(
           textDirection: TextDirection.rtl,

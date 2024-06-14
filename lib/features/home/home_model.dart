@@ -21,8 +21,8 @@ class PendingOrdersModel {
   late final String status;
   late final String date;
   late final String time;
-  late final int orderPrice;
-  late final int deliveryPrice;
+  late final num orderPrice;
+  late final num deliveryPrice;
   late final num? totalPrice;
   late final String phone;
   late final Address address;
@@ -60,8 +60,8 @@ class Address {
   late final double lng;
   late final String location;
   late final String description;
-  late final int userId;
-  late final int isDefault;
+  late final num userId;
+  late final num isDefault;
   late final String phone;
   late final String createdAt;
   late final String updatedAt;
@@ -106,14 +106,14 @@ class Links {
 }
 
 class Meta {
-  late final int currentPage;
-  late final int from;
-  late final int lastPage;
+  late final num currentPage;
+  late final num from;
+  late final num lastPage;
   late final List<Links> links;
   late final String path;
-  late final int perPage;
-  late final int to;
-  late final int total;
+  late final num perPage;
+  late final num to;
+  late final num total;
 
   Meta.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'] ?? 0;

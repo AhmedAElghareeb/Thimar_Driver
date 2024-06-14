@@ -59,7 +59,7 @@ class DriverCard extends StatelessWidget {
             height: 8.h,
           ),
           Text(
-            CacheHelper.getFullName(),
+            CacheHelper.getToken().isEmpty ? "اسم المستخدم" : CacheHelper.getFullName(),
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.bold,
@@ -70,7 +70,7 @@ class DriverCard extends StatelessWidget {
             height: 5.h,
           ),
           Text(
-            CacheHelper.getPhone(),
+            CacheHelper.getToken().isEmpty ? "رقم الجوال" :CacheHelper.getPhone(),
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,

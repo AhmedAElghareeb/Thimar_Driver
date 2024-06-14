@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +12,7 @@ import 'package:thimar_driver/features/authentication/bloc.dart';
 import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
 import 'package:thimar_driver/views/auth/car/cars_data.dart';
+import 'package:thimar_driver/views/auth/check_code.dart';
 import 'package:thimar_driver/views/auth/login.dart';
 import 'package:thimar_driver/views/auth/resuable/upload_photo.dart';
 
@@ -263,16 +263,46 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
               SizedBox(
                 height: 16.h,
               ),
-              BlocBuilder(
+              BlocConsumer(
                 bloc: _bloc,
+                listener: (BuildContext context, Object? state) {
+                  if (state is DriverRegisterSuccessState) {
+                    navigateTo(
+                      CheckCodeScreen(
+                        pageName: "activation",
+                        phone: widget.phone,
+                      ),
+                    );
+                  }
+                },
                 builder: (BuildContext context, state) {
                   return AppButton(
                     isLoading: state is DriverRegisterLoadingState,
                     text: "تسجيل",
                     onPress: () {
-                      if (_formKey.currentState!.validate()) {
-                        _bloc.add(
-                          DriverRegisterEvent(
+                      String message = "";
+                      if (_bloc.licenseImage == null) {
+                        message = "بالرجاء ادخال صورة رخصة القيادة";
+                      } else if (_bloc.carFormImage == null) {
+                        message = "بالرجاء ادخال صورة استمارة السيارة";
+                      } else if (_bloc.carInsurance == null) {
+                        message = "بالرجاء ادخال صورة تأمين السيارة";
+                      } else if (_bloc.frontCarImage == null) {
+                        message = "بالرجاء ادخال صورة السيارة من الامام";
+                      } else if (_bloc.backCarImage == null) {
+                        message = "بالرجاء ادخال صورة السيارة من الخلف";
+                      } else if (_bloc.carModelController.text.isEmpty) {
+                        message = "بالرجاء ادخال موديل السيارة";
+                      } else if (!_isSelectable) {
+                        message = "بالرجاء الموافقة علي الشروط والاحكام";
+                      }
+                      if (message.isNotEmpty) {
+                        showSnackBar(
+                          message,
+                          typ: MessageType.fail,
+                        );
+                      } else if (_formKey.currentState!.validate()) {
+                        _bloc.add(DriverRegisterEvent(
                             context: context,
                             name: widget.name,
                             phone: widget.password,
@@ -280,14 +310,41 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
                             id: widget.id,
                             email: widget.email,
                             password: widget.password,
-                            confirmPassword: widget.confirmPassword,
-                          ),
-                        );
+                            confirmPassword: widget.confirmPassword));
                       }
+                      navigateTo(
+                        CheckCodeScreen(
+                            pageName: "activation", phone: widget.phone),
+                      );
                     },
                   );
                 },
               ),
+              // BlocBuilder(
+              //   bloc: _bloc,
+              //   builder: (BuildContext context, state) {
+              //     return AppButton(
+              //       isLoading: state is DriverRegisterLoadingState,
+              //       text: "تسجيل",
+              //       onPress: () {
+              //         if (_formKey.currentState!.validate()) {
+              //           _bloc.add(
+              //             DriverRegisterEvent(
+              //               context: context,
+              //               name: widget.name,
+              //               phone: widget.password,
+              //               location: widget.location,
+              //               id: widget.id,
+              //               email: widget.email,
+              //               password: widget.password,
+              //               confirmPassword: widget.confirmPassword,
+              //             ),
+              //           );
+              //         }
+              //       },
+              //     );
+              //   },
+              // ),
               SizedBox(height: 24.h),
               BottomLine(
                 onPress: () {

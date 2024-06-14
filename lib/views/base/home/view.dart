@@ -7,7 +7,7 @@ import 'package:thimar_driver/core/design/app_input.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/home/events.dart';
 import 'package:thimar_driver/features/home/states.dart';
-import 'package:thimar_driver/views/base/orders/order_details.dart';
+import 'package:thimar_driver/views/base/home/pending_orders_details.dart';
 
 import '../../../features/home/bloc.dart';
 import '../../../features/home/home_model.dart';
@@ -67,7 +67,6 @@ class _HomeViewState extends State<HomeView> {
                       return ListView.builder(
                         itemBuilder: (context, index) => HomeItems(
                           model: state.data[index],
-                          address: state.data[index].address,
                         ),
                         itemCount: state.data.length,
                       );
@@ -89,21 +88,18 @@ class HomeItems extends StatelessWidget {
   const HomeItems({
     super.key,
     required this.model,
-    required this.address,
   });
 
   final PendingOrdersModel model;
-  final Address address;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         navigateTo(
-          OrderDetails(
+          OrderPendingDetails(
             id: model.id,
             model: model,
-            address: address,
           ),
         );
       },
@@ -218,7 +214,7 @@ class HomeItems extends StatelessWidget {
                           ),
                           Flexible(
                             child: Text(
-                              address.location,
+                              model.address.location,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w300,

@@ -1,3 +1,5 @@
+import 'package:thimar_driver/features/orders/order_details_maodel.dart';
+
 import 'model.dart';
 import 'search_model.dart';
 
@@ -12,6 +14,16 @@ class GetOrdersDataSuccessState extends OrdersStates {
 }
 
 class GetOrdersDataFailedState extends OrdersStates {}
+
+class GetOrdersDetailsDataLoadingState extends OrdersStates {}
+
+class GetOrdersDetailsDataSuccessState extends OrdersStates {
+  final OrderDetailsModel model;
+
+  GetOrdersDetailsDataSuccessState({required this.model});
+}
+
+class GetOrdersDetailsDataFailedState extends OrdersStates {}
 
 class GetSearchDataSuccessState extends OrdersStates{
   final List<OrderSearchModel> data;

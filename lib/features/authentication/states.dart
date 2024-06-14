@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/cars_model.dart';
 import 'package:thimar_driver/features/authentication/profile_model.dart';
@@ -78,4 +79,71 @@ class GetProfileErrorState extends AuthenticationStates {
   final String message;
 
   GetProfileErrorState({required this.message});
+}
+
+class CheckCodeLoadingState extends AuthenticationStates {}
+
+class CheckCodeSuccessState extends AuthenticationStates {
+  final String message;
+  final BuildContext context;
+
+  CheckCodeSuccessState({required this.message,required this.context}){
+    showSnackBar(message,typ: MessageType.success);
+  }
+}
+
+class CheckCodeErrorState extends AuthenticationStates {
+  final String message ;
+  final int statueCode;
+  final BuildContext context;
+
+  CheckCodeErrorState({required this.message, required this.statueCode,required  this.context}){
+    showSnackBar(message,typ: MessageType.fail);
+  }
+}
+
+class ResendCodeLoadingState extends AuthenticationStates {}
+
+class ResendCodeSuccessState extends AuthenticationStates {
+  final String message;
+  final BuildContext context;
+  ResendCodeSuccessState({required this.message,required this.context}) {
+    // Toast.show(message,context);
+  }
+}
+
+class ResendCodeErrorState extends AuthenticationStates {
+  final String message;
+  final int statusCode;
+  final BuildContext context;
+  ResendCodeErrorState({required this.message, required this.statusCode,required this.context }){
+    // Toast.show(message,context,messageType: MessageType.error);
+
+  }
+}
+
+class EditProfileLoadingState extends AuthenticationStates {}
+
+class EditProfileSuccessState extends AuthenticationStates {
+  final BuildContext context;
+  final  String message;
+  final  String? image;
+
+  EditProfileSuccessState({required this.context, required this.message,required this.image}){
+    showSnackBar(message);
+    debugPrint(image??"image is null");
+    if(image!=null) {
+      CacheHelper.setImage(image!);
+    }
+  }
+}
+
+class EditProfileErrorState extends AuthenticationStates {
+  final BuildContext context;
+  final  String message;
+  final int statusCode;
+  EditProfileErrorState({required this.context, required this.message, required this.statusCode}){
+    showSnackBar(message, typ: MessageType.fail);
+  }
+
 }

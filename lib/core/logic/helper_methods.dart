@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -71,6 +72,8 @@ String getOrderStatus(String status) {
       return "منتهي";
     case 'canceled':
       return "طلب ملغي";
+    case 'accepted':
+      return "تم قبول الطلب";
     default:
       return "";
   }
@@ -88,6 +91,8 @@ Color getOrderStatusColor(String status) {
       return const Color(0xffEFEFEF);
     case 'canceled':
       return const Color(0xffFFCFCF);
+    case 'accepted':
+      return Colors.green;
 
     default:
       return Theme.of(navigatorKey.currentState!.context)
@@ -110,6 +115,8 @@ Color getOrderStatusTextColor(String status) {
       return const Color(0xff707070);
     case 'canceled':
       return const Color(0xffFF0000);
+    case 'accepted':
+      return const Color(0xffFFFFFF);
 
     default:
       return Theme.of(navigatorKey.currentState!.context)
@@ -122,7 +129,9 @@ Color getOrderStatusTextColor(String status) {
 
 Future<void> getMaps(double lat, double lng) async {
   final availableMaps = await MapLauncher.installedMaps;
-  print(availableMaps);
+  if (kDebugMode) {
+    print(availableMaps);
+  }
   if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
     await availableMaps.first.showMarker(
       coords: Coords(lat, lng),

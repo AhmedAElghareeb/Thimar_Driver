@@ -14,7 +14,6 @@ import 'package:thimar_driver/views/base/account/faqs.dart';
 import 'package:thimar_driver/views/base/account/personal_data.dart';
 import 'package:thimar_driver/views/base/account/policy.dart';
 import 'package:thimar_driver/views/base/account/suggestions_complaints.dart';
-import 'package:thimar_driver/views/base/account/wallet.dart';
 import '../../../features/authentication/bloc.dart';
 
 class AccountView extends StatefulWidget {
@@ -29,7 +28,6 @@ class _AccountViewState extends State<AccountView> {
 
   List<String> titles = [
     "البيانات الشخصية",
-    "المحفظة",
     "عن التطبيق",
     "أسئلة متكررة",
     "سياسة الخصوصية",
@@ -40,7 +38,6 @@ class _AccountViewState extends State<AccountView> {
 
   List<String> icons = [
     "person.svg",
-    "wallet.svg",
     "about_us.svg",
     "question.svg",
     "policy.svg",
@@ -51,7 +48,6 @@ class _AccountViewState extends State<AccountView> {
 
   List<Widget> pages = [
     const PersonalData(),
-    const Wallet(),
     const AboutApp(),
     const Faqs(),
     const Policy(),
