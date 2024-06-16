@@ -42,7 +42,7 @@ class PendingOrdersModel {
     deliveryPrice = json['delivery_price'] ?? 0;
     totalPrice = json['total_price'] ?? 0;
     phone = json['phone'] ?? "";
-    address = Address.fromJson(json['address']);
+    address = Address.fromJson(json['address'] ?? {});
     payType = json['pay_type'] ?? "";
     note = null;
     clientName = json['client_name'] ?? "";

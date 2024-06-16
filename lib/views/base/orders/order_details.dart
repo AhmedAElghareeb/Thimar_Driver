@@ -5,18 +5,26 @@ import 'package:flutter_svg/svg.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:thimar_driver/core/design/app_bar.dart';
+import 'package:thimar_driver/core/design/app_button.dart';
+import 'package:thimar_driver/core/design/app_input.dart';
+import 'package:thimar_driver/features/orders/accept_order/bloc.dart';
 import 'package:thimar_driver/features/orders/bloc.dart';
 import 'package:thimar_driver/features/orders/events.dart';
+import 'package:thimar_driver/features/orders/finish_deliver/bloc.dart';
+import 'package:thimar_driver/features/orders/refuse_order/bloc.dart';
+import 'package:thimar_driver/features/orders/start_deliver/bloc.dart';
 import 'package:thimar_driver/features/orders/states.dart';
+import 'package:thimar_driver/views/base/home_nav_bar.dart';
 import '../../../core/logic/helper_methods.dart';
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({
     super.key,
-    required this.id,
+    required this.id, required this.fromWhere,
   });
 
   final int id;
+  final String fromWhere;
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
@@ -24,6 +32,11 @@ class OrderDetails extends StatefulWidget {
 
 class _OrderDetailsState extends State<OrderDetails> {
   final bloc = KiwiContainer().resolve<OrdersBloc>();
+  final _refuseBloc = KiwiContainer().resolve<RefuseOrderBloc>();
+  final _acceptBloc = KiwiContainer().resolve<AcceptOrderBloc>();
+  final _startDeliver = KiwiContainer().resolve<StartDeliverBloc>();
+  final _finishDeliver = KiwiContainer().resolve<FinishDeliverBloc>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -52,7 +65,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             }
           },
           builder: (context, state) {
-            if(state is GetOrdersDetailsDataSuccessState) {
+            if (state is GetOrdersDetailsDataSuccessState) {
               var item = state.model;
               return ListView(
                 padding: EdgeInsetsDirectional.symmetric(
@@ -213,14 +226,15 @@ class _OrderDetailsState extends State<OrderDetails> {
                               children: [
                                 ...List.generate(
                                   item.images.length,
-                                      (index) => Container(
+                                  (index) => Container(
                                     width: 25.w,
                                     height: 25.h,
-                                    margin: EdgeInsetsDirectional.only(end: 3.w),
+                                    margin:
+                                        EdgeInsetsDirectional.only(end: 3.w),
                                     clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
                                       borderRadius:
-                                      BorderRadiusDirectional.circular(
+                                          BorderRadiusDirectional.circular(
                                         7.r,
                                       ),
                                     ),
@@ -237,8 +251,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
                                       borderRadius:
-                                      BorderRadiusDirectional.circular(7.r),
-                                      color: getMaterialColor().withOpacity(0.13),
+                                          BorderRadiusDirectional.circular(7.r),
+                                      color:
+                                          getMaterialColor().withOpacity(0.13),
                                     ),
                                     child: Center(
                                       child: Text(
@@ -511,6 +526,192 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  item.status == "pending"
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //accept order button
+                            BlocBuilder(
+                              buildWhen: (previous, current) =>
+                                  current is SuccessAcceptState,
+                              bloc: _acceptBloc,
+                              builder: (context, state) {
+                                return AppButton(
+                                  onPress: () {
+                                    _acceptBloc.add(
+                                      StartAcceptOrderEvent(id: widget.id),
+                                    );
+                                    navigateTo(
+                                      OrderDetails(
+                                        id: item.id,
+                                        fromWhere: widget.fromWhere,
+                                      ),
+                                    );
+                                  },
+                                  isLoading: state is LoadingAcceptState,
+                                  text: "قبول",
+                                  width: 163.w,
+                                  height: 60.h,
+                                );
+                              },
+                            ),
+                            //refuse order button
+                            BlocConsumer(
+                              bloc: _refuseBloc,
+                              listener: (context, state) {
+                                if (state is SuccessState) {
+                                  pop();
+                                }
+                              },
+                              builder: (context, state) {
+                                return AppButton(
+                                  onPress: () {
+                                    _refuseBloc.add(
+                                      StartRefuseOrderEvent(
+                                        id: widget.id,
+                                      ),
+                                    );
+                                  },
+                                  isLoading: state is LoadingState,
+                                  text: "رفض",
+                                  width: 163.w,
+                                  height: 60.h,
+                                  backColor: const Color(0xffFF0000),
+                                );
+                              },
+                            ),
+                          ],
+                        )
+                      : item.status == "accepted"
+                          ? BlocConsumer(
+                              bloc: _startDeliver,
+                              listener: (context, state) {
+                                if (state is SuccessStartDeliverState) {
+                                  bloc.add(GetOrderDetailsDataEvent(item.id));
+                                  setState(() {});
+                                }
+                              },
+                              builder: (context, state) {
+                                return AppButton(
+                                  onPress: () {
+                                    _startDeliver
+                                        .add(FirstStartDeliver(id: item.id));
+                                  },
+                                  text: "بدء التوصيل",
+                                  isLoading: state is LoadingStartDeliverState,
+                                  width: 343.w,
+                                  height: 60.h,
+                                );
+                              },
+                            )
+                          : item.status == "in_way"
+                              ? BlocConsumer(
+                                  bloc: _finishDeliver,
+                                  listener: (context, state) {
+                                    if (state is SuccessFinishDeliverState) {
+                                      navigateTo(const HomeNavBar());
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    return AppButton(
+                                      onPress: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) => Container(
+                                            padding: EdgeInsetsDirectional.only(
+                                              bottom: MediaQuery.of(context)
+                                                  .viewInsets
+                                                  .bottom,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20.r),
+                                                topRight: Radius.circular(20.r),
+                                              ),
+                                            ),
+                                            child: SingleChildScrollView(
+                                              padding: EdgeInsetsDirectional
+                                                  .symmetric(horizontal: 16.w),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 13.h,
+                                                  ),
+                                                  Text(
+                                                    "المبلغ المستحق من العميل",
+                                                    style: TextStyle(
+                                                      fontSize: 20.sp,
+                                                      color: Theme.of(context)
+                                                          .hintColor,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 13.h,
+                                                  ),
+                                                  Text(
+                                                    "${item.totalPrice + item.deliveryPrice} ر.س",
+                                                    style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontSize: 24.sp,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 13.h,
+                                                  ),
+                                                  Form(
+                                                    key: _formKey,
+                                                    child: AppInput(
+                                                      controller: _finishDeliver
+                                                          .clientPaidAmount,
+                                                      validator: (val) {
+                                                        if (val!.isEmpty) {
+                                                          return "من فضلك أدخل المبلغ";
+                                                        }
+                                                        return null;
+                                                      },
+                                                      labelText:
+                                                          "اكتب المبلغ المستلم من العميل",
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 25.h,
+                                                  ),
+                                                  AppButton(
+                                                    onPress: () {
+                                                      if (_formKey.currentState!
+                                                          .validate()) {
+                                                        _finishDeliver.add(
+                                                          FinishDeliverEvent(
+                                                            id: item.id,
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                    text: "تأكيد",
+                                                    width: 343.w,
+                                                    height: 60.h,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      text: "إنهاء الطلب",
+                                      width: 343.w,
+                                      height: 60.h,
+                                    );
+                                  },
+                                )
+                              : const SizedBox.shrink()
                 ],
               );
             } else {

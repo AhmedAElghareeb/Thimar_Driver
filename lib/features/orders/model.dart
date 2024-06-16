@@ -42,7 +42,7 @@ class DriverOrdersModel {
     clientName = json['client_name'] ?? "";
     clientImage = json['client_image'] ?? "";
     phone = json['phone'] ?? "";
-    address = OrdersAddress.fromJson(json['address']);
+    address = OrdersAddress.fromJson(json['address'] ?? {});
     location = json['location'] ?? "";
     images = List.from(json['images'] ?? []).map((e)=>Images.fromJson(e)).toList();
     payType = json['pay_type'] ?? "";

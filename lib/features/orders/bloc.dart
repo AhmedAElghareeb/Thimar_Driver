@@ -16,6 +16,7 @@ class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
   final DioHelper dioHelper;
   final searchController = TextEditingController();
 
+  //current and finished
   Future<void> getData(
       GetOrdersDataEvent event, Emitter<OrdersStates> emit) async {
     emit(
@@ -40,6 +41,7 @@ class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
     }
   }
 
+  //details
   Future<void> getDetails(
       GetOrderDetailsDataEvent event, Emitter<OrdersStates> emit) async {
     emit(
@@ -64,6 +66,7 @@ class OrdersBloc extends Bloc<OrdersEvents, OrdersStates> {
     }
   }
 
+  //search
   Future<void> getSearch(
       GetSearchData event, Emitter<OrdersStates> emit) async {
     final response = await dioHelper.getFromServer(

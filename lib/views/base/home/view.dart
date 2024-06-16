@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:thimar_driver/core/design/app_empty.dart';
 import 'package:thimar_driver/core/design/app_input.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/home/events.dart';
 import 'package:thimar_driver/features/home/states.dart';
-import 'package:thimar_driver/views/base/home/pending_orders_details.dart';
+import 'package:thimar_driver/views/base/orders/order_details.dart';
 
 import '../../../features/home/bloc.dart';
 import '../../../features/home/home_model.dart';
@@ -64,7 +65,7 @@ class _HomeViewState extends State<HomeView> {
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is GetPendingOrdersDataSuccessState) {
-                      return ListView.builder(
+                      return state.data.isEmpty ? const AppEmpty() : ListView.builder(
                         itemBuilder: (context, index) => HomeItems(
                           model: state.data[index],
                         ),
@@ -97,9 +98,9 @@ class HomeItems extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         navigateTo(
-          OrderPendingDetails(
+          OrderDetails(
             id: model.id,
-            model: model,
+            fromWhere: "FromHome",
           ),
         );
       },
@@ -115,7 +116,6 @@ class HomeItems extends StatelessWidget {
           ),
           color: const Color(0xff707070).withOpacity(0.05),
         ),
-        height: 162.h,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

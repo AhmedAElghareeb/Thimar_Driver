@@ -38,7 +38,7 @@ class OrderDetailsModel {
     clientName = json['client_name'] ?? "";
     clientImage = json['client_image'] ?? "";
     phone = json['phone'] ?? "";
-    address = Address.fromJson(json['address']);
+    address = Address.fromJson(json['address'] ?? {});
     location = json['location'] ?? "";
     images = List.from(json['images'] ?? []).map((e)=>Images.fromJson(e)).toList();
     payType = json['pay_type'] ?? "";

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:thimar_driver/core/design/app_empty.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/orders/bloc.dart';
 import 'package:thimar_driver/features/orders/events.dart';
@@ -159,9 +160,7 @@ class _OrdersViewState extends State<OrdersView> {
                     );
                   } else if (state is GetOrdersDataSuccessState) {
                     return state.data.isEmpty
-                        ? const Center(
-                            child: Text("لا يوجد بيانات"),
-                          )
+                        ? const AppEmpty()
                         : ListView.separated(
                             scrollDirection: Axis.vertical,
                             itemCount: state.data.length,
@@ -177,6 +176,7 @@ class _OrdersViewState extends State<OrdersView> {
                                   navigateTo(
                                     OrderDetails(
                                       id: state.data[index].id,
+                                      fromWhere: type,
                                     ),
                                   );
                                 },

@@ -18,8 +18,8 @@ void main() async {
   FirebaseMessaging.instance.getToken().then((value) {
     if (kDebugMode) {
       print(
-      "Token is : $value",
-    );
+        "Token is : $value",
+      );
     }
   });
   initKiwi();

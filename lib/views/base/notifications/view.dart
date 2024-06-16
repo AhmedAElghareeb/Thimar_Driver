@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:thimar_driver/core/design/app_empty.dart';
 import 'package:thimar_driver/features/notifications/bloc.dart';
 import 'package:thimar_driver/features/notifications/events.dart';
 import 'package:thimar_driver/features/notifications/states.dart';
@@ -34,7 +35,7 @@ class _NotificationsViewState extends State<NotificationsView> {
             if (state is NotificationsLoadingState) {
               return const Center(child: CircularProgressIndicator(),);
             } else if (state is NotificationsSuccessState) {
-              return ListView.builder(
+              return state.notifications.isEmpty ? const AppEmpty() : ListView.builder(
                 itemBuilder: (context, index) => ItemCard(
                   model: state.notifications[index],
                 ),
