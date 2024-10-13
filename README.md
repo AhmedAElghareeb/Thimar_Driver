@@ -3,11 +3,12 @@
 The Delivery App is designed to make it easy for users to have their orders delivered directly to their homes. With a focus on **security** and **reliability**, our licensed drivers ensure that your deliveries arrive safely and on time. You can also monitor and manage your delivery requests in real-time.
 
 ## Some of app Screens 🎨
+
 <p align="center">
-  ![Splash](https://github.com/user-attachments/assets/0073242a-78b4-4d05-a988-f3f2c4d31340)
-  ![Home](https://github.com/user-attachments/assets/67cc0be9-313d-4b1b-8a2f-6c38f508c793)
-  ![Order Details](https://github.com/user-attachments/assets/9540a2fc-d148-4354-a123-7c65813d8511)
-  ![Profile](https://github.com/user-attachments/assets/6f6bbc10-1da4-4f9b-b4ae-dfe3a13d0c30)
+  <img src="https://github.com/user-attachments/assets/0073242a-78b4-4d05-a988-f3f2c4d31340" alt="Image 1" width="150"/>
+  <img src="https://github.com/user-attachments/assets/67cc0be9-313d-4b1b-8a2f-6c38f508c793" alt="Image 2" width="150"/>
+  <img src="https://github.com/user-attachments/assets/9540a2fc-d148-4354-a123-7c65813d8511" alt="Image 3" width="150"/>
+  <img src="https://github.com/user-attachments/assets/6f6bbc10-1da4-4f9b-b4ae-dfe3a13d0c30" alt="Image 3" width="150"/>
 </p>
 
 ## Features 🚀
