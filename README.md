@@ -2,29 +2,12 @@
 
 The Delivery App is designed to make it easy for users to have their orders delivered directly to their homes. With a focus on **security** and **reliability**, our licensed drivers ensure that your deliveries arrive safely and on time. You can also monitor and manage your delivery requests in real-time.
 
-## Create new Account
+## Some of app Screens 🎨
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e1372500-fe8f-4335-a22c-1c963ad1e22b" alt="Image 1" width="200"/>
-    <img src="https://github.com/user-attachments/assets/0785d1f8-705f-478c-88fc-7fc95990d5dc" alt="Image 2" width="200"/>
-  <img src="https://github.com/user-attachments/assets/6111d884-e4e9-4684-905b-cfa0a38bf787" alt="Image 2" width="200"/>
-</p>
-
-## Screens 🎨
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/c45f664c-d657-4c33-9392-d0ada1041611" alt="Image 1" width="150"/>
-  <img src="https://github.com/user-attachments/assets/13d0c4a6-b7f1-4702-8010-74506f346180" alt="Image 2" width="150"/>
-  <img src="https://github.com/user-attachments/assets/5e1fa478-734a-4d43-836b-ddb7acfc8d41" alt="Image 3" width="150"/>
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/4d7c7a93-a2c0-4ac2-bc6c-b53200f2604f" alt="Image 1" width="150"/>
-  <img src="https://github.com/user-attachments/assets/74a5e8ec-a512-4325-80e0-0ad54c604ffb" alt="Image 2" width="150"/>
-</p>
-
-## Edit Your Profile
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/475ff350-a0a0-49a7-908e-31b27b3f64d0" alt="Image 1" width="150"/>
-  <img src="https://github.com/user-attachments/assets/0aa175e8-84f5-44b4-84d9-f3544bcd97a8" alt="Image 2" width="150"/>
+  ![Splash](https://github.com/user-attachments/assets/0073242a-78b4-4d05-a988-f3f2c4d31340)
+  ![Home](https://github.com/user-attachments/assets/67cc0be9-313d-4b1b-8a2f-6c38f508c793)
+  ![Order Details](https://github.com/user-attachments/assets/9540a2fc-d148-4354-a123-7c65813d8511)
+  ![Profile](https://github.com/user-attachments/assets/6f6bbc10-1da4-4f9b-b4ae-dfe3a13d0c30)
 </p>
 
 ## Features 🚀
