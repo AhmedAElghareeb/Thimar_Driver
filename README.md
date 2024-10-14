@@ -5,10 +5,8 @@ The Delivery App is designed to make it easy for users to have their orders deli
 ## Some of app Screens 🎨
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0073242a-78b4-4d05-a988-f3f2c4d31340" alt="Image 1" width="150"/>
-  <img src="https://github.com/user-attachments/assets/67cc0be9-313d-4b1b-8a2f-6c38f508c793" alt="Image 2" width="150"/>
-  <img src="https://github.com/user-attachments/assets/9540a2fc-d148-4354-a123-7c65813d8511" alt="Image 3" width="150"/>
-  <img src="https://github.com/user-attachments/assets/6f6bbc10-1da4-4f9b-b4ae-dfe3a13d0c30" alt="Image 3" width="150"/>
+  <img src="https://github.com/user-attachments/assets/70e2f793-8e80-45d4-9e7f-6e78983b8220" alt="Image 1" width="200"/>
+  <img src="https://github.com/user-attachments/assets/67001319-f079-414c-b917-613a8fd81a62" alt="Image 2" width="200"/>
 </p>
 
 ## Features 🚀
