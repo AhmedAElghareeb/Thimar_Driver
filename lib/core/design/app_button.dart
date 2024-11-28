@@ -28,13 +28,7 @@ class AppButton extends StatelessWidget {
           )
         : FilledButton(
             onPressed: onPress,
-            style: OutlinedButton.styleFrom(
-              minimumSize: Size(
-                width,
-                height,
-              ),
-              backgroundColor: backColor
-            ),
+            style: OutlinedButton.styleFrom(backgroundColor: backColor),
             child: Text(
               text,
               style: TextStyle(
