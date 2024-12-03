@@ -27,6 +27,7 @@ class MapScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class MapItem extends StatefulWidget {
   late double lat;
   late double lng;

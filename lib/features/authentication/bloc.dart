@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -293,7 +292,7 @@ class AuthenticationBloc
       if (backCarImage != null)
         "car_back_image": MultipartFile.fromFileSync(backCarImage!.path,
             filename: backCarImage!.path.split("/").last),
-      if (cityId != null) "city_id": cityId,
+      "city_id": cityId,
       "iban": iBanController.text,
       "bank_name": bankNameController.text,
       "car_type": carTypeController.text,
