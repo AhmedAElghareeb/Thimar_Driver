@@ -40,7 +40,6 @@ class AuthenticationBloc
   final iBanController = TextEditingController();
   final bankNameController = TextEditingController();
   final carTypeController = TextEditingController();
-  final carModelController = TextEditingController();
 
   final DioHelper dioHelper;
   final formKey = GlobalKey<FormState>();
@@ -216,7 +215,7 @@ class AuthenticationBloc
       "car_back_image": MultipartFile.fromFileSync(backCarImage!.path,
           filename: backCarImage!.path.split("/").last),
       "car_type": carTypeController.text,
-      "model_id": carModelController.text,
+      "model_id": selectedCar,
       "iban": iBanController.text,
       "bank_name": bankNameController.text
     });
@@ -296,7 +295,7 @@ class AuthenticationBloc
       "iban": iBanController.text,
       "bank_name": bankNameController.text,
       "car_type": carTypeController.text,
-      "model_id": carModelController.text,
+      "model_id": selectedCar,
     });
     if (response.success) {
       emit(EditProfileSuccessState(

@@ -226,29 +226,29 @@ class _CheckCodeScreenState extends State<CheckCodeScreen> {
                 );
               }),
       ]),
-      SizedBox(height: 48.h),
-      Center(
-          child: RichText(
-              text: TextSpan(
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                  children: <TextSpan>[
-            TextSpan(
-                text:
-                    "${"Have An Account? "}\t",
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  color: Theme.of(context).primaryColor,
-                )),
-            TextSpan(
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => navigateTo(
-                        const LoginView(),
-                      ),
-                text: "Login",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ))
-          ])))
+      // SizedBox(height: 48.h),
+      // Center(
+      //     child: RichText(
+      //         text: TextSpan(
+      //             style: TextStyle(color: Theme.of(context).primaryColor),
+      //             children: <TextSpan>[
+      //       TextSpan(
+      //           text:
+      //               "${"Have An Account? "}\t",
+      //           style: TextStyle(
+      //             fontSize: 15.sp,
+      //             color: Theme.of(context).primaryColor,
+      //           )),
+      //       TextSpan(
+      //           recognizer: TapGestureRecognizer()
+      //             ..onTap = () => navigateTo(
+      //                   const LoginView(),
+      //                 ),
+      //           text: "Login",
+      //           style: const TextStyle(
+      //             fontWeight: FontWeight.bold,
+      //           ))
+      //     ])))
     ])));
   }
 }

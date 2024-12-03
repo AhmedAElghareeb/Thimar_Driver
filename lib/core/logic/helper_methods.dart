@@ -34,6 +34,15 @@ Future navigateTo(Widget page, {bool removeHistory = false}) {
   );
 }
 
+Future pushReplacement(Widget page) {
+  return Navigator.pushReplacement(
+    navigatorKey.currentContext!,
+    MaterialPageRoute(
+      builder: (context) => page,
+    ),
+  );
+}
+
 void pop() => Navigator.of(navigatorKey.currentContext!).pop();
 
 enum MessageType { success, fail, warning }

@@ -85,7 +85,7 @@ class _RegisterViewState extends State<RegisterView> {
                               },
                             ),
                             SizedBox(
-                              height: 15.h,
+                              height: 10.h,
                             ),
                             AppInput(
                               controller: _phoneController,
@@ -102,7 +102,7 @@ class _RegisterViewState extends State<RegisterView> {
                               },
                             ),
                             SizedBox(
-                              height: 15.h,
+                              height: 10.h,
                             ),
                             StatefulBuilder(
                               builder: (context, setState) => GestureDetector(
@@ -152,12 +152,13 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                             ),
                             SizedBox(
-                              height: 15.h,
+                              height: 10.h,
                             ),
                             AppInput(
                               controller: _locationController,
                               prefixIcon: "assets/icons/location.svg",
                               labelText: "تحديد الموقع على الخريطة",
+                              isEnabled: false,
                               onPress: () {
                                 navigateTo(const MapScreen()).then((value) {
                                   if (CacheHelper
@@ -165,6 +166,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       .isNotEmpty) {
                                     _locationController.text = CacheHelper
                                         .getCurrentLocationWithNameMap();
+                                        setState(() {});
                                   }
                                 });
                               },
@@ -231,37 +233,39 @@ class _RegisterViewState extends State<RegisterView> {
                               height: 15.h,
                             ),
                             AppButton(
-                                text: "التالي",
-                                onPress: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    navigateTo(
-                                      RegisterDriverCarInfo(
-                                        name: _nameController.text,
-                                        phone: _phoneController.text,
-                                        location: _locationController.text,
-                                        id: _idController.text,
-                                        email: _emailController.text,
-                                        password: _passwordController.text,
-                                        confirmPassword: _confirmPasswordController.text,
-                                      ),
-                                    );
-                                  }
-                                }),
+                              text: "التالي",
+                              onPress: () {
+                                if (_formKey.currentState!.validate()) {
+                                  navigateTo(
+                                    RegisterDriverCarInfo(
+                                      name: _nameController.text,
+                                      phone: _phoneController.text,
+                                      location: _locationController.text,
+                                      id: _idController.text,
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                      confirmPassword:
+                                          _confirmPasswordController.text,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            BottomLine(
+                              onPress: () {
+                                navigateTo(
+                                  const LoginView(),
+                                );
+                              },
+                              subText: "لديك حساب بالفعل ؟ ",
+                              text: "تسجيل الدخول",
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 45.h,
-                    ),
-                    BottomLine(
-                      onPress: () {
-                        navigateTo(
-                          const LoginView(),
-                        );
-                      },
-                      subText: "لديك حساب بالفعل ؟ ",
-                      text: "تسجيل الدخول",
                     ),
                   ],
                 ),

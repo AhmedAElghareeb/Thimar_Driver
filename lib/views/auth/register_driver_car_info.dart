@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,16 +72,32 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
-                            onTap: () async {
-                              _bloc.licenseImage = await uploadPhoto(
-                                context: context,
-                              );
-                              setState(() {});
-                            },
-                            child: PhotoUpload(
-                              text: "صورة رخصة القيادة",
-                              image: _bloc.licenseImage,
-                            )),
+                          onTap: () async {
+                            _bloc.licenseImage = await uploadPhoto(
+                              context: context,
+                              selectedImage: _bloc.licenseImage,
+                            );
+                            setState(() {});
+                          },
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: 70,
+                                height: 70,
+                                child: DottedBorder(
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.camera_alt_outlined,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text('صورة رخصة السيارة', style: TextStyle(color: Theme.of(context).primaryColor,),),
+                            ],
+                          ),
+                        ),
                         GestureDetector(
                             onTap: () async {
                               _bloc.carFormImage =
@@ -274,48 +291,65 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
                       ),
                     );
                   }
+                  if (state is DriverRegisterFailedState) {
+                    showSnackBar(
+                      state.msg,
+                      typ: MessageType.fail,
+                    );
+                  }
                 },
                 builder: (BuildContext context, state) {
                   return AppButton(
                     isLoading: state is DriverRegisterLoadingState,
                     text: "تسجيل",
                     onPress: () {
-                      String message = "";
-                      if (_bloc.licenseImage == null) {
-                        message = "بالرجاء ادخال صورة رخصة القيادة";
-                      } else if (_bloc.carFormImage == null) {
-                        message = "بالرجاء ادخال صورة استمارة السيارة";
-                      } else if (_bloc.carInsurance == null) {
-                        message = "بالرجاء ادخال صورة تأمين السيارة";
-                      } else if (_bloc.frontCarImage == null) {
-                        message = "بالرجاء ادخال صورة السيارة من الامام";
-                      } else if (_bloc.backCarImage == null) {
-                        message = "بالرجاء ادخال صورة السيارة من الخلف";
-                      } else if (_bloc.carModelController.text.isEmpty) {
-                        message = "بالرجاء ادخال موديل السيارة";
-                      } else if (!_isSelectable) {
-                        message = "بالرجاء الموافقة علي الشروط والاحكام";
+                      if (_formKey.currentState!.validate()) {
+                        if (_bloc.licenseImage == null) {
+                          showSnackBar(
+                            "بالرجاء ادخال صورة رخصة القيادة",
+                            typ: MessageType.fail,
+                          );
+                        } else if (_bloc.carFormImage == null) {
+                          showSnackBar(
+                            "بالرجاء ادخال صورة استمارة السيارة",
+                            typ: MessageType.fail,
+                          );
+                        } else if (_bloc.carInsurance == null) {
+                          showSnackBar(
+                            "بالرجاء ادخال صورة تأمين السيارة",
+                            typ: MessageType.fail,
+                          );
+                        } else if (_bloc.frontCarImage == null) {
+                          showSnackBar(
+                            "بالرجاء ادخال صورة السيارة من الامام",
+                            typ: MessageType.fail,
+                          );
+                        } else if (_bloc.backCarImage == null) {
+                          showSnackBar(
+                            "بالرجاء ادخال صورة السيارة من الخلف",
+                            typ: MessageType.fail,
+                          );
+                        } else if (!_isSelectable) {
+                          showSnackBar(
+                            "الرجاء الموافقة علي الشروط والاحكام!!",
+                            typ: MessageType.fail,
+                          );
+                        } else {
+                          _bloc.add(
+                            DriverRegisterEvent(
+                              context: context,
+                              id: widget.id,
+                              name: widget.name,
+                              phone: widget.phone,
+                              location: widget.location,
+                              email: widget.email,
+                              password: widget.password,
+                              confirmPassword: widget.confirmPassword,
+                            ),
+                          );
+                          print("Success");
+                        }
                       }
-                      if (message.isNotEmpty) {
-                        showSnackBar(
-                          message,
-                          typ: MessageType.fail,
-                        );
-                      } else if (_formKey.currentState!.validate()) {
-                        _bloc.add(DriverRegisterEvent(
-                            context: context,
-                            name: widget.name,
-                            phone: widget.password,
-                            location: widget.location,
-                            id: widget.id,
-                            email: widget.email,
-                            password: widget.password,
-                            confirmPassword: widget.confirmPassword));
-                      }
-                      navigateTo(
-                        CheckCodeScreen(
-                            pageName: "activation", phone: widget.phone),
-                      );
                     },
                   );
                 },

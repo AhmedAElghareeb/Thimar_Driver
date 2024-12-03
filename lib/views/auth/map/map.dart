@@ -42,15 +42,17 @@ class MapItem extends StatefulWidget {
 class _State extends State<MapItem> {
   Set<Marker> markers = {};
   final _controller = Completer<GoogleMapController>();
-  late String locationName;
+ String locationName  = "";
 
   @override
   void initState() {
     super.initState();
     if (widget.lightMode) {
       goToMyLocation(location: LatLng(widget.lat, widget.lng));
+      locationName = CacheHelper.getCurrentLocationWithNameMap();
     } else {
       determinePosition();
+      locationName = CacheHelper.getCurrentLocationWithNameMap();
     }
   }
 
@@ -164,11 +166,29 @@ class _State extends State<MapItem> {
 }
 
 Future<void> getLocation(double lat, double lng) async {
-  List<Placemark> placeMarks =
-      await placemarkFromCoordinates(lat, lng, localeIdentifier: "EG");
-  print(placeMarks.toString());
-  print("1" * 80);
-  print(placeMarks[0].subAdministrativeArea.toString());
-  await CacheHelper.saveCurrentLocationWithNameMap(
-      placeMarks[0].locality.toString());
+  try {
+    List<Placemark> placeMarks =
+        await placemarkFromCoordinates(lat, lng, localeIdentifier: "eg");
+    if (placeMarks.isEmpty) {
+      print("No placemarks found for the given coordinates.");
+      return;
+    }
+    print(placeMarks.toString());
+    print("1" * 80);
+    String? subAdministrativeArea = placeMarks[0].subAdministrativeArea;
+    if (subAdministrativeArea == null) {
+      print("Sub-administrative area is not available.");
+    } else {
+      print(subAdministrativeArea);
+    }
+    String? locality = placeMarks[0].locality;
+    if (locality == null) {
+      print("Locality is not available.");
+    } else {
+      await CacheHelper.saveCurrentLocationWithNameMap(locality);
+    }
+  } catch (e) {
+    print("Error occurred during reverse geocoding: $e");
+  }
 }
+

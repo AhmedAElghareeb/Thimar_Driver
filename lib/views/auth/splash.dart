@@ -27,11 +27,11 @@ class _SplashViewState extends State<SplashView> {
           seconds: 3,
         ), () async {
       if (CacheHelper.getToken().isNotEmpty) {
-        navigateTo(
+        pushReplacement(
           const HomeNavBar(),
         );
       } else {
-        navigateTo(
+        pushReplacement(
           const LoginView(),
         );
       }
