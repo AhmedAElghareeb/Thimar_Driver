@@ -244,5 +244,5 @@ Future<File> uploadPhoto({required BuildContext context, File? selectedImage}) a
     ),
   );
 
-  return selectedImage!;
+  return selectedImage ?? File('');
 }

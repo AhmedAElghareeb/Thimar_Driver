@@ -33,7 +33,8 @@ class AuthenticationBloc
 
   CityModel? selectedCity;
   CarsModel? selectedCar;
-  late int cityId;
+
+  // int? cityId;
 
   final phController = TextEditingController();
   final passController = TextEditingController();
@@ -196,7 +197,7 @@ class AuthenticationBloc
         await dioHelper.sendToServer(url: "driver_register", body: {
       "fullname": event.name,
       "phone": event.phone,
-      "city_id": cityId,
+      "city_id": '12',
       "lat": CacheHelper.getLat(),
       "lng": CacheHelper.getLongitude(),
       "location": event.location,
@@ -215,7 +216,7 @@ class AuthenticationBloc
       "car_back_image": MultipartFile.fromFileSync(backCarImage!.path,
           filename: backCarImage!.path.split("/").last),
       "car_type": carTypeController.text,
-      "model_id": selectedCar,
+      "model_id": selectedCar?.id,
       "iban": iBanController.text,
       "bank_name": bankNameController.text
     });
@@ -291,11 +292,11 @@ class AuthenticationBloc
       if (backCarImage != null)
         "car_back_image": MultipartFile.fromFileSync(backCarImage!.path,
             filename: backCarImage!.path.split("/").last),
-      "city_id": cityId,
+      "city_id": selectedCity?.id,
       "iban": iBanController.text,
       "bank_name": bankNameController.text,
       "car_type": carTypeController.text,
-      "model_id": selectedCar,
+      "model_id": selectedCar?.id,
     });
     if (response.success) {
       emit(EditProfileSuccessState(
@@ -338,15 +339,21 @@ class AuthenticationBloc
       PostResendCodeDataEvent event, Emitter<AuthenticationStates> emit) async {
     emit(ResendCodeLoadingState());
 
-    final response = await dioHelper.sendToServer(url: "resend_code", body: {
-      "phone": event.phone,
-    });
+    final response = await dioHelper.sendToServer(
+      url: "resend_code",
+      body: {
+        "phone": event.phone,
+      },
+    );
 
     if (response.success) {
-      emit(ResendCodeSuccessState(
-        message: response.response!.statusMessage ?? "",
-        context: event.context,
-      ));
+      emit(
+        ResendCodeSuccessState(
+          message: response.response!.statusMessage ?? "",
+          context: event.context,
+        ),
+      );
+      // showSnackBar('Code is ${response}');
     } else {
       emit(ResendCodeErrorState(
           message: response.response!.statusMessage ?? "",

@@ -9,14 +9,14 @@ import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
 
 class PhotoUpload extends StatefulWidget {
-  final String text;
+  final String? text;
   final File? image;
   final bool showPhoto;
   final int? imageNumber;
 
   const PhotoUpload(
       {super.key,
-      required this.text,
+      this.text,
       required this.image,
       this.showPhoto = false,
       this.imageNumber});
@@ -53,7 +53,9 @@ class _PhotoUploadState extends State<PhotoUpload> {
                   bloc: _getProfileBloc,
                   builder: (context, state) {
                     if (state is GetProfileLoadingState) {
-                      return const Center(child: CircularProgressIndicator(),);
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     } else if (state is GetProfileSuccessState) {
                       final image = state.data.data;
                       List<String> images = [
@@ -95,7 +97,7 @@ class _PhotoUploadState extends State<PhotoUpload> {
         ),
         SizedBox(height: 8.h),
         Text(
-          widget.text,
+          widget.text ?? '',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: widget.showPhoto ? FontWeight.bold : FontWeight.w300,

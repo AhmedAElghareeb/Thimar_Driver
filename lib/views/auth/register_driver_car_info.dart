@@ -10,25 +10,28 @@ import 'package:thimar_driver/core/design/auth_header.dart';
 import 'package:thimar_driver/core/design/steps.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/bloc.dart';
+import 'package:thimar_driver/features/authentication/city_model.dart';
 import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
 import 'package:thimar_driver/views/auth/car/cars_data.dart';
 import 'package:thimar_driver/views/auth/check_code.dart';
 import 'package:thimar_driver/views/auth/login.dart';
-import 'package:thimar_driver/views/auth/resuable/upload_photo.dart';
 
 class RegisterDriverCarInfo extends StatefulWidget {
   final String name, phone, location, id, email, password, confirmPassword;
+  final CityModel cityId;
 
-  const RegisterDriverCarInfo(
-      {super.key,
-      required this.name,
-      required this.phone,
-      required this.location,
-      required this.id,
-      required this.email,
-      required this.password,
-      required this.confirmPassword});
+  const RegisterDriverCarInfo({
+    super.key,
+    required this.name,
+    required this.phone,
+    required this.location,
+    required this.id,
+    required this.email,
+    required this.password,
+    required this.confirmPassword,
+    required this.cityId,
+  });
 
   @override
   State<RegisterDriverCarInfo> createState() => _RegisterCarScreenState();
@@ -69,81 +72,310 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
                 child: Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            _bloc.licenseImage = await uploadPhoto(
-                              context: context,
-                              selectedImage: _bloc.licenseImage,
-                            );
-                            setState(() {});
-                          },
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                width: 70,
-                                height: 70,
-                                child: DottedBorder(
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.camera_alt_outlined,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () async {
+                              _bloc.licenseImage = await uploadPhoto(
+                                context: context,
+                                selectedImage: _bloc.licenseImage,
+                              );
+                              setState(() {});
+                            },
+                            child: _bloc.licenseImage == null
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 70,
+                                        height: 70,
+                                        child: DottedBorder(
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        'صورة رخصة السيارة',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Image.file(
+                                        _bloc.licenseImage!,
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                      Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            _bloc.licenseImage = null;
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.clear,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text('صورة رخصة السيارة', style: TextStyle(color: Theme.of(context).primaryColor,),),
-                            ],
                           ),
                         ),
-                        GestureDetector(
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                          child: GestureDetector(
                             onTap: () async {
-                              _bloc.carFormImage =
-                                  await uploadPhoto(context: context);
+                              _bloc.carFormImage = await uploadPhoto(
+                                context: context,
+                                selectedImage: _bloc.carFormImage,
+                              );
                               setState(() {});
                             },
-                            child: PhotoUpload(
-                              text: "استمارة السيارة",
-                              image: _bloc.carFormImage,
-                            )),
-                        GestureDetector(
+                            child: _bloc.carFormImage == null
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 70,
+                                        height: 70,
+                                        child: DottedBorder(
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        'استمارة السيارة',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Image.file(
+                                        _bloc.carFormImage!,
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                      Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            _bloc.carFormImage = null;
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.clear,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                          child: GestureDetector(
                             onTap: () async {
-                              _bloc.carInsurance =
-                                  await uploadPhoto(context: context);
+                              _bloc.carInsurance = await uploadPhoto(
+                                context: context,
+                                selectedImage: _bloc.carInsurance,
+                              );
                               setState(() {});
                             },
-                            child: PhotoUpload(
-                              text: "تأمين السيارة",
-                              image: _bloc.carInsurance,
-                            )),
+                            child: _bloc.carInsurance == null
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 70,
+                                        height: 70,
+                                        child: DottedBorder(
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        'تأمين السيارة',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Image.file(
+                                        _bloc.carInsurance!,
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                      Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            _bloc.carInsurance = null;
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.clear,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 16.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        GestureDetector(
+                        Expanded(
+                          child: GestureDetector(
                             onTap: () async {
-                              _bloc.frontCarImage =
-                                  await uploadPhoto(context: context);
+                              _bloc.frontCarImage = await uploadPhoto(
+                                context: context,
+                                selectedImage: _bloc.frontCarImage,
+                              );
                               setState(() {});
                             },
-                            child: PhotoUpload(
-                              text: "السيارة من الأمام",
-                              image: _bloc.frontCarImage,
-                            )),
-                        GestureDetector(
+                            child: _bloc.frontCarImage == null
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 70,
+                                        height: 70,
+                                        child: DottedBorder(
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        "السيارة من الأمام",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Image.file(
+                                        _bloc.frontCarImage!,
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                      Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            _bloc.frontCarImage = null;
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.clear,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
                             onTap: () async {
-                              _bloc.backCarImage =
-                                  await uploadPhoto(context: context);
+                              _bloc.backCarImage = await uploadPhoto(
+                                context: context,
+                                selectedImage: _bloc.backCarImage,
+                              );
                               setState(() {});
                             },
-                            child: PhotoUpload(
-                              text: "السيارة من الخلف",
-                              image: _bloc.backCarImage,
-                            )),
+                            child: _bloc.backCarImage == null
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 70,
+                                        height: 70,
+                                        child: DottedBorder(
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        "السيارة من الخلف",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Image.file(
+                                        _bloc.backCarImage!,
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                      Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            _bloc.backCarImage = null;
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.clear,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -338,6 +570,7 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
                           _bloc.add(
                             DriverRegisterEvent(
                               context: context,
+                              cityId: widget.cityId,
                               id: widget.id,
                               name: widget.name,
                               phone: widget.phone,
@@ -347,7 +580,6 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
                               confirmPassword: widget.confirmPassword,
                             ),
                           );
-                          print("Success");
                         }
                       }
                     },

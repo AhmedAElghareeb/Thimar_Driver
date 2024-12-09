@@ -24,7 +24,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     Timer(
         const Duration(
-          seconds: 3,
+          seconds: 1,
         ), () async {
       if (CacheHelper.getToken().isNotEmpty) {
         pushReplacement(

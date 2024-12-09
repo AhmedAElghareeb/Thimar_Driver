@@ -5,12 +5,10 @@ import 'package:kiwi/kiwi.dart';
 import 'package:thimar_driver/core/design/app_button.dart';
 import 'package:thimar_driver/core/design/app_input.dart';
 import 'package:thimar_driver/core/design/auth_header.dart';
-import 'package:thimar_driver/core/logic/cache_helper.dart';
 import 'package:thimar_driver/core/logic/helper_methods.dart';
 import 'package:thimar_driver/features/authentication/bloc.dart';
 import 'package:thimar_driver/views/auth/cities/cities_data.dart';
 import 'package:thimar_driver/views/auth/login.dart';
-import 'package:thimar_driver/views/auth/map/map.dart';
 import 'package:thimar_driver/views/auth/register_driver_car_info.dart';
 
 import '../../core/design/auth_bottom_line.dart';
@@ -158,18 +156,24 @@ class _RegisterViewState extends State<RegisterView> {
                               controller: _locationController,
                               prefixIcon: "assets/icons/location.svg",
                               labelText: "تحديد الموقع على الخريطة",
-                              isEnabled: false,
-                              onPress: () {
-                                navigateTo(const MapScreen()).then((value) {
-                                  if (CacheHelper
-                                          .getCurrentLocationWithNameMap()
-                                      .isNotEmpty) {
-                                    _locationController.text = CacheHelper
-                                        .getCurrentLocationWithNameMap();
-                                        setState(() {});
-                                  }
-                                });
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "الرجاء ادخال عنوانك";
+                                }
+                                return null;
                               },
+                              // isEnabled: false,
+                              // onPress: () {
+                              //   navigateTo(const MapScreen()).then((value) {
+                              //     if (CacheHelper
+                              //             .getCurrentLocationWithNameMap()
+                              //         .isNotEmpty) {
+                              //       _locationController.text = CacheHelper
+                              //           .getCurrentLocationWithNameMap();
+                              //           setState(() {});
+                              //     }
+                              //   });
+                              // },
                             ),
                             SizedBox(
                               height: 15.h,
@@ -221,10 +225,11 @@ class _RegisterViewState extends State<RegisterView> {
                               prefixIcon: "assets/icons/lock.svg",
                               labelText: "تأكيد كلمة المرور",
                               validator: (value) {
-                                if (value!.isEmpty ||
-                                    value.length < 6 ||
+                                if (value!.isEmpty) {
+                                  return "الرجاء تأكيد كلمة المرور";
+                                } else if (value.length < 6 ||
                                     value != _passwordController.text) {
-                                  return "الرجاء ادخال كلمة مرور صحيحة ومطابقة";
+                                  return "كلمتا المرور غير متطابقتين...!";
                                 }
                                 return null;
                               },
@@ -241,6 +246,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       name: _nameController.text,
                                       phone: _phoneController.text,
                                       location: _locationController.text,
+                                      cityId: _bloc.selectedCity!,
                                       id: _idController.text,
                                       email: _emailController.text,
                                       password: _passwordController.text,
