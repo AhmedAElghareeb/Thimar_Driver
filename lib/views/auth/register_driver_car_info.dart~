@@ -522,7 +522,7 @@ class _RegisterCarScreenState extends State<RegisterDriverCarInfo> {
                         phone: widget.phone,
                       ),
                     );
-                    showSnackBar('Code is 1111', typ: MessageType.success);
+                    showSnackBar('Code is 1111');
                   }
                   if (state is DriverRegisterFailedState) {
                     showSnackBar(

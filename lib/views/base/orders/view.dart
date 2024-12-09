@@ -330,24 +330,19 @@ class _OrdersViewState extends State<OrdersView> {
                                           Row(
                                             children: [
                                               ...List.generate(
-                                                item.images.length,
+                                                item.images.length > 3 ? 3 : item.images.length,
                                                     (index) => Container(
                                                   width: 25.w,
                                                   height: 25.h,
+                                                  margin: EdgeInsetsDirectional.only(end: 3.w),
                                                   clipBehavior: Clip.antiAlias,
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadiusDirectional.circular(7.r),
-                                                    border: Border.all(
-                                                      color: const Color(
-                                                        0xff61B80C,
-                                                      ).withOpacity(0.06),
+                                                    borderRadius: BorderRadiusDirectional.circular(
+                                                      7.r,
                                                     ),
                                                   ),
-                                                  margin: EdgeInsetsDirectional.only(end: 3.w),
                                                   child: Image.network(
                                                     item.images[index].url,
-                                                    width: 25.w,
-                                                    height: 25.h,
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),
@@ -377,8 +372,8 @@ class _OrdersViewState extends State<OrdersView> {
                                           Text(
                                             "${item.totalPrice} ر.س",
                                             style: TextStyle(
-                                              fontWeight: FontWeight.w900,
                                               fontSize: 15.sp,
+                                              fontWeight: FontWeight.bold,
                                               color: getMaterialColor(),
                                             ),
                                           ),

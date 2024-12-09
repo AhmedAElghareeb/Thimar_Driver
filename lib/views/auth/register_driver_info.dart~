@@ -156,13 +156,24 @@ class _RegisterViewState extends State<RegisterView> {
                               controller: _locationController,
                               prefixIcon: "assets/icons/location.svg",
                               labelText: "تحديد الموقع على الخريطة",
-                              keyboardType: TextInputType.streetAddress,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "الرجاء ادخال عنوانك بالتفصيل";
+                                  return "الرجاء ادخال عنوانك";
                                 }
                                 return null;
                               },
+                              // isEnabled: false,
+                              // onPress: () {
+                              //   navigateTo(const MapScreen()).then((value) {
+                              //     if (CacheHelper
+                              //             .getCurrentLocationWithNameMap()
+                              //         .isNotEmpty) {
+                              //       _locationController.text = CacheHelper
+                              //           .getCurrentLocationWithNameMap();
+                              //           setState(() {});
+                              //     }
+                              //   });
+                              // },
                             ),
                             SizedBox(
                               height: 15.h,

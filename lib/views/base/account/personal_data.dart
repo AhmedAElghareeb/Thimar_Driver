@@ -13,7 +13,6 @@ import 'package:thimar_driver/views/auth/cities/cities_data.dart';
 import 'package:thimar_driver/views/auth/resuable/upload_photo.dart';
 import 'package:thimar_driver/views/base/home_nav_bar.dart';
 
-
 class PersonalData extends StatefulWidget {
   const PersonalData({super.key});
 
@@ -46,7 +45,9 @@ class _PersonalDataState extends State<PersonalData>
               bloc: _getProfileBloc,
               builder: (BuildContext context, state) {
                 if (state is GetProfileLoadingState) {
-                  return const Center(child: CircularProgressIndicator(),);
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 } else if (state is GetProfileSuccessState) {
                   return Column(children: [
                     GestureDetector(
@@ -142,8 +143,9 @@ class _PersonalDataState extends State<PersonalData>
                               child: AbsorbPointer(
                                 absorbing: true,
                                 child: AppInput(
-                                  labelText: _getProfileBloc.selectedCity?.name ??
-                                      "المدينة",
+                                  labelText:
+                                      _getProfileBloc.selectedCity?.name ??
+                                          "المدينة",
                                   validator: (value) {
                                     if (_getProfileBloc.selectedCity == null) {
                                       return "الرجاء اختيار المدينة";
@@ -192,7 +194,7 @@ class _PersonalDataState extends State<PersonalData>
                             GestureDetector(
                                 onTap: () async {
                                   _editProfileBloc.licenseImage =
-                                  await uploadPhoto(
+                                      await uploadPhoto(
                                     context: context,
                                   );
                                   setState(() {});
@@ -206,7 +208,7 @@ class _PersonalDataState extends State<PersonalData>
                             GestureDetector(
                                 onTap: () async {
                                   _editProfileBloc.carFormImage =
-                                  await uploadPhoto(context: context);
+                                      await uploadPhoto(context: context);
                                   setState(() {});
                                 },
                                 child: PhotoUpload(
@@ -218,7 +220,7 @@ class _PersonalDataState extends State<PersonalData>
                             GestureDetector(
                                 onTap: () async {
                                   _editProfileBloc.carInsurance =
-                                  await uploadPhoto(context: context);
+                                      await uploadPhoto(context: context);
                                   setState(() {});
                                 },
                                 child: PhotoUpload(
@@ -236,7 +238,7 @@ class _PersonalDataState extends State<PersonalData>
                             GestureDetector(
                                 onTap: () async {
                                   _editProfileBloc.frontCarImage =
-                                  await uploadPhoto(context: context);
+                                      await uploadPhoto(context: context);
                                   setState(() {});
                                 },
                                 child: PhotoUpload(
@@ -248,7 +250,7 @@ class _PersonalDataState extends State<PersonalData>
                             GestureDetector(
                                 onTap: () async {
                                   _editProfileBloc.backCarImage =
-                                  await uploadPhoto(context: context);
+                                      await uploadPhoto(context: context);
                                   setState(() {});
                                 },
                                 child: PhotoUpload(
@@ -291,16 +293,20 @@ class _PersonalDataState extends State<PersonalData>
             bloc: _editProfileBloc,
             listener: (context, state) {
               if (state is EditProfileSuccessState) {
-                navigateTo(const HomeNavBar(), );
+                navigateTo(
+                  const HomeNavBar(),
+                );
               }
             },
-            buildWhen: (previous, current) => current is EditProfileSuccessState,
+            buildWhen: (previous, current) =>
+                current is EditProfileSuccessState,
             builder: (context, state) {
               return AppButton(
                 isLoading: state is EditProfileLoadingState,
                 text: "تعديل البيانات",
                 onPress: () {
-                  _editProfileBloc.add(PostEditProfileDataEvent(context: context));
+                  _editProfileBloc
+                      .add(PostEditProfileDataEvent(context: context));
                 },
               );
             }),

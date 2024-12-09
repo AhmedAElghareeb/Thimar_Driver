@@ -225,7 +225,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Row(
                               children: [
                                 ...List.generate(
-                                  item.images.length,
+                                  item.images.length > 3 ? 3 : item.images.length,
                                   (index) => Container(
                                     width: 25.w,
                                     height: 25.h,

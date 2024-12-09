@@ -61,6 +61,12 @@ class DriverForgetPasswordSuccessState extends AuthenticationStates {}
 
 class DriverForgetPasswordFailedState extends AuthenticationStates {}
 
+class DriverResetPasswordLoadingState extends AuthenticationStates {}
+
+class DriverResetPasswordSuccessState extends AuthenticationStates {}
+
+class DriverResetPasswordFailedState extends AuthenticationStates {}
+
 class DriverLogOutLoadingState extends AuthenticationStates {}
 
 class DriverLogOutSuccessState extends AuthenticationStates {}
@@ -130,7 +136,7 @@ class EditProfileSuccessState extends AuthenticationStates {
   final  String? image;
 
   EditProfileSuccessState({required this.context, required this.message,required this.image}){
-    showSnackBar(message);
+    showSnackBar('تم التعديل بنجاح', typ: MessageType.success);
     debugPrint(image??"image is null");
     if(image!=null) {
       CacheHelper.setImage(image!);

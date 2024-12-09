@@ -338,24 +338,18 @@ class AuthenticationBloc
       "model_id": selectedCar?.id,
     });
     if (response.success) {
-      emit(
-        EditProfileSuccessState(
+      emit(EditProfileSuccessState(
           context: event.context,
           message: response.response!.statusMessage ?? "",
-          image: userImage?.path,
-        ),
-      );
+          image: userImage?.path));
       await CacheHelper.setFullName(nameController.text);
       await CacheHelper.setPhone(phoneController.text);
-      await CacheHelper.setCityName(selectedCity?.name ?? '');
+      await CacheHelper.setCityName(cityController.text);
     } else {
-      emit(
-        EditProfileErrorState(
+      emit(EditProfileErrorState(
           context: event.context,
           message: response.response!.statusMessage ?? "",
-          statusCode: response.response!.statusCode ?? 200,
-        ),
-      );
+          statusCode: response.response!.statusCode ?? 200));
     }
   }
 

@@ -9,8 +9,9 @@ import 'package:thimar_driver/features/authentication/bloc.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:thimar_driver/features/authentication/events.dart';
 import 'package:thimar_driver/features/authentication/states.dart';
-import 'package:thimar_driver/views/auth/forget_password.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:thimar_driver/views/auth/login.dart';
+import 'package:thimar_driver/views/auth/reset_password.dart';
 
 class CheckCodeScreen extends StatefulWidget {
   final String pageName, phone;
@@ -76,7 +77,7 @@ class _CheckCodeScreenState extends State<CheckCodeScreen> {
                 Row(
                   children: [
                     Text(
-                      "${widget.phone}+",
+                      widget.phone,
                       style: TextStyle(
                         fontSize: 15.sp,
                         color: Theme.of(context).primaryColor,
@@ -85,12 +86,10 @@ class _CheckCodeScreenState extends State<CheckCodeScreen> {
                     SizedBox(width: 5.w),
                     GestureDetector(
                       onTap: () {
-                        navigateTo(
-                          const ForgetPasswordView(),
-                        );
+                        pop();
                       },
                       child: Text(
-                        "Check code change phone number",
+                        "Change phone number",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
@@ -104,9 +103,11 @@ class _CheckCodeScreenState extends State<CheckCodeScreen> {
                 Form(
                   key: _formKey,
                   child: PinCodeTextField(
+                    errorTextDirection: TextDirection.rtl,
+                    errorTextSpace: 30,
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 4) {
-                        return "Enter Code";
+                      if (value!.isEmpty) {
+                        return "Enter a valid Code";
                       }
                       return null;
                     },
@@ -126,33 +127,43 @@ class _CheckCodeScreenState extends State<CheckCodeScreen> {
                     cursorColor: Theme.of(context).primaryColor,
                     animationDuration: const Duration(milliseconds: 300),
                     keyboardType: TextInputType.number,
-                    onChanged: (value) {},
                   ),
                 ),
                 SizedBox(
                   height: 24.h,
                 ),
                 BlocConsumer(
-                    listener: (context, state) {
-                      if (state is CheckCodeSuccessState) {
-                        // navigateTo(
-                        //   ResetPasswordScreen(
-                        //     phone: widget.phone,
-                        //     code: _bloc.codeController.text,
-                        //   ),
-                        // );
+                  listener: (context, state) {
+                    if (state is CheckCodeSuccessState) {
+                      if (widget.pageName == 'check') {
+                        navigateTo(
+                          ResetPasswordView(
+                            phone: widget.phone,
+                          ),
+                        );
+                      } else {
+                        navigateTo(
+                          const LoginView(),
+                        );
+                      }
+                    }
+                  },
+                  bloc: _bloc,
+                  builder: (context, state) => AppButton(
+                    isLoading: state is CheckCodeLoadingState,
+                    text: "Confirm Code",
+                    onPress: () {
+                      if (_formKey.currentState!.validate()) {
+                        _bloc.add(
+                          PostCheckCodeDataEvent(
+                            context: context,
+                            phone: widget.phone,
+                          ),
+                        );
                       }
                     },
-                    bloc: _bloc,
-                    builder: (context, state) => AppButton(
-                        isLoading: state is CheckCodeLoadingState,
-                        text: "Confirm Code",
-                        onPress: () {
-                          if (_formKey.currentState!.validate()) {
-                            _bloc.add(PostCheckCodeDataEvent(
-                                context: context, phone: widget.phone));
-                          }
-                        })),
+                  ),
+                ),
                 SizedBox(
                   height: 34.h,
                 ),

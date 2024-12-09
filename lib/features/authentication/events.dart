@@ -57,6 +57,15 @@ class PostEditProfileDataEvent extends AuthenticationEvents {
 
 class DriverForgetPasswordEvent extends AuthenticationEvents {}
 
+class DriverResetPasswordEvent extends AuthenticationEvents {
+  final String phone, newPassword;
+
+  DriverResetPasswordEvent({
+    required this.phone,
+    required this.newPassword,
+  });
+}
+
 class DriverLogOutEvent extends AuthenticationEvents {}
 
 class GetProfileDataEvent extends AuthenticationEvents {}

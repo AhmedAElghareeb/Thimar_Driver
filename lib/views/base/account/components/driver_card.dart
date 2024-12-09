@@ -14,9 +14,7 @@ class DriverCard extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(
         vertical: 25.h,
       ),
-      margin: EdgeInsetsDirectional.only(
-        bottom: 16.h
-      ),
+      margin: EdgeInsetsDirectional.only(bottom: 16.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(
@@ -33,10 +31,9 @@ class DriverCard extends StatelessWidget {
           Text(
             "حسابي",
             style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-            ),
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
           SizedBox(
             height: 20.h,
@@ -50,8 +47,10 @@ class DriverCard extends StatelessWidget {
                 15.r,
               ),
             ),
-            child: Image.network(
-              CacheHelper.getImage(),
+            child: Image(
+              image: NetworkImage(
+                CacheHelper.getImage(),
+              ),
               fit: BoxFit.fill,
             ),
           ),
@@ -59,7 +58,9 @@ class DriverCard extends StatelessWidget {
             height: 8.h,
           ),
           Text(
-            CacheHelper.getToken().isEmpty ? "اسم المستخدم" : CacheHelper.getFullName(),
+            CacheHelper.getToken().isEmpty
+                ? "اسم المستخدم"
+                : CacheHelper.getFullName(),
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.bold,
@@ -70,7 +71,9 @@ class DriverCard extends StatelessWidget {
             height: 5.h,
           ),
           Text(
-            CacheHelper.getToken().isEmpty ? "رقم الجوال" :CacheHelper.getPhone(),
+            CacheHelper.getToken().isEmpty
+                ? "رقم الجوال"
+                : CacheHelper.getPhone(),
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,

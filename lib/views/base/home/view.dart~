@@ -240,7 +240,7 @@ class HomeItems extends StatelessWidget {
                 Row(
                   children: [
                     ...List.generate(
-                      model.images.length > 3 ? 3 : model.images.length,
+                      model.images.length,
                       (index) => Container(
                         width: 25.w,
                         height: 25.h,
