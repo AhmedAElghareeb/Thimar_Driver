@@ -9,6 +9,10 @@ The Delivery App is designed to make it easy for users to have their orders deli
   <img src="https://github.com/user-attachments/assets/67001319-f079-414c-b917-613a8fd81a62" alt="Image 2" width="200"/>
 </p>
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a7e66721-228d-42fc-86fc-f260fcee6c8b" alt="Image 1" width="200"/>
+</p>
+
 ## Features 🚀
 
 - **Home Delivery**: Easily order delivery to your doorstep.
