@@ -37,4 +37,3 @@ We have integrated **Flutter Icons** to provide a sleek and modern user experien
 2. **Track Your Order**: Monitor the delivery in real-time and receive notifications about the status of your order.
 3. **View Vehicle Details**: See photos of the delivery vehicle and ensure it's licensed.
 4. **Manage Orders**: Accept or deny orders from the notification screen.
-
