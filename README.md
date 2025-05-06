@@ -52,3 +52,27 @@ flowchart TD
     DL --> |"Data Responses"| BL  
     DL --> |"External Communication"| SL  
     SL --> |"Processed Data"| DL
+Technology Stack
+Category	Technologies
+Framework	Flutter
+State Management	Bloc Pattern (flutter_bloc)
+Network Communication	Dio HTTP client
+Local Storage	Shared Preferences
+Dependency Injection	Kiwi
+Maps & Location	Google Maps Flutter, Geolocator, Geocoding
+Notifications	Firebase Messaging
+Analytics	Firebase Analytics
+UI Components	Flutter ScreenUtil, SVG, Animations
+Icons Used in the App 🎨
+We have integrated Flutter Icons to provide a sleek and modern user experience:
+
+Delivery Truck Icon: Represents the delivery service.icons8-delivery-truck-36
+
+Car Icon: Shows details of the delivery vehicle.
+icons8-car-50
+
+How to Use 📱
+Place an Order: Use the app to place an order for home or work delivery.
+Track Your Order: Monitor the delivery in real-time and receive notifications about the status of your order.
+View Vehicle Details: See photos of the delivery vehicle and ensure it's licensed.
+Manage Orders: Accept or deny orders from the notification screen.
