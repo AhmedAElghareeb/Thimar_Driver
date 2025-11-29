@@ -14,8 +14,6 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      # --- NEW STEPS START HERE ---
-
       # 1. Setup Java (Required for Android Gradle build)
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -27,14 +25,18 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: '3.24.0'
+          flutter-version: '3.24.0' # Specify the version here
+          channel: 'stable'         # The channel must be 'stable', 'beta', or 'master'
 
-      # 3. Get Flutter dependencies
-      - name: Install dependencies
-        run: flutter pub get
-
-      # --- NEW STEPS END HERE ---
-
+      # 3. Get Flutter dependencies with automatic retry
+      # Networking steps like pub get can sometimes fail due to transient network issues.
+      - name: Install dependencies (with retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 5
+          max_attempts: 3 # Retry up to 3 times
+          command: flutter pub get
+          
       # The analysis requires to retrieve dependencies and build successfully
       - name: Build
         run: flutter build apk --release
